@@ -40,8 +40,8 @@ app.get("/", function(req, res){
     res.render("signup");
 })
 
-app.get("/success", function(req, res){
-    res.render("success");
+app.get("/verify", function(req, res){
+    res.render("verify");
 })
 
 app.post("/", function(req, res){
