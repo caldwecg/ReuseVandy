@@ -44,6 +44,14 @@ app.get("/verify", function(req, res){
     res.render("verify");
 })
 
+app.get("/home", function(req, res){
+    res.render("home");
+})
+
+app.post("/verify", function(req, res){
+    res.redirect("home")
+})
+
 app.post("/", function(req, res){
     useremail = req.body.email
     userpassword = req.body.password
@@ -64,6 +72,7 @@ app.post("/", function(req, res){
 
 
 })
+
 
 app.listen(3000, function(){
     console.log("App is listening on port 3000");
