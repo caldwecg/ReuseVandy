@@ -58,7 +58,7 @@ app.post("/", function(req, res){
         }
         else{
             console.log("successfully saved user")
-            res.redirect("/success")
+            res.redirect("/verify")
         }
     });
 
