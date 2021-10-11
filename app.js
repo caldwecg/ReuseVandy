@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const request = require("request");
 const mongoose = require("mongoose")
+const nodemailer = require("nodemailer");
 
 const app = express();
 
@@ -26,12 +27,17 @@ const userSchema = new mongoose.Schema({
     username: String,
     email: String,
     password: String,
+    verification: Number,
     posts: {type: [postSchema]}
 });
 
 
 
 const User = mongoose.model("User", userSchema);
+
+
+
+  
 
 
 app.use(bodyParser.urlencoded({extended:true}))
@@ -49,16 +55,43 @@ app.get("/home", function(req, res){
 })
 
 app.post("/verify", function(req, res){
+
+    req.body.
     res.redirect("home")
 })
 
 app.post("/", function(req, res){
     useremail = req.body.email
     userpassword = req.body.password
+    code = Math.floor(Math.random() * 10000);
+
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'reusevandy@gmail.com',
+          pass: 'ReuseVandy2021!'
+        }
+    });
+    
+    var mailOptions = {
+        from: 'reusevandy@gmail.com',
+        to: useremail,
+        subject: 'Verification Code',
+        text: 'Your code is: ' + code.toString()
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+    });
 
     const user = new User({
         email: useremail,
-        password: userpassword
+        password: userpassword,
+        verification: code
     })
     User.insertMany(user, function(err){
         if(err){
