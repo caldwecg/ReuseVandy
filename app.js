@@ -56,7 +56,9 @@ app.get("/home", function(req, res){
 
 app.post("/verify", function(req, res){
 
-    req.body.
+    code = req.body.code;
+    
+    
     res.redirect("home")
 })
 
