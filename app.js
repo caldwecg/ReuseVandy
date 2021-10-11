@@ -59,10 +59,24 @@ app.get("/home", function (req, res) {
     res.render("home");
 })
 
+<<<<<<< HEAD
 app.post("/verify", function (req, res) {
 
     req.body.
         res.redirect("home")
+=======
+app.get("/signup", function(req, res){
+    console.log('request for signup recieved')
+    res.render("signup");
+})
+
+app.post("/verify", function(req, res){
+
+    code = req.body.code;
+    
+    
+    res.redirect("home")
+>>>>>>> c1e9c1bd063cb619b382ead3e5a09c62748f94f8
 })
 
 app.post("/", function (req, res) {                     //root page (SignUp page)
