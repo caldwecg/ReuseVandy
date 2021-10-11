@@ -20,15 +20,20 @@ const postSchema = new mongoose.Schema({
         data: Buffer,
         contentType: String
     }
-    
+
 });
 
 const userSchema = new mongoose.Schema({
     username: String,
     email: String,
     password: String,
-    verification: Number,
-    posts: {type: [postSchema]}
+    /*status: {                                     //could add a status aspect that gets changed to Active upon verification
+        type: String,
+        enum: ['Pending', 'Active'],
+        default: 'Pending'
+    },*/
+    confirmationCode: Number,
+    posts: { type: [postSchema] }
 });
 
 
@@ -37,67 +42,72 @@ const User = mongoose.model("User", userSchema);
 
 
 
-  
 
 
-app.use(bodyParser.urlencoded({extended:true}))
 
-app.get("/", function(req, res){
+app.use(bodyParser.urlencoded({ extended: true }))
+
+app.get("/", function (req, res) {
     res.render("signup");
 })
 
-app.get("/verify", function(req, res){
+app.get("/verify", function (req, res) {
     res.render("verify");
 })
 
-app.get("/home", function(req, res){
+app.get("/home", function (req, res) {
     res.render("home");
 })
 
-app.post("/verify", function(req, res){
+app.post("/verify", function (req, res) {
 
     req.body.
-    res.redirect("home")
+        res.redirect("home")
 })
 
-app.post("/", function(req, res){
-    useremail = req.body.email
-    userpassword = req.body.password
-    code = Math.floor(Math.random() * 10000);
+app.post("/", function (req, res) {                     //root page (SignUp page)
+    const code = Math.floor(Math.random() * 10000);     //create random verification code
+    const emailHandle = "@vanderbilt.edu";
 
-    var transporter = nodemailer.createTransport({
-        service: 'gmail',
+    const user = new User({                             //create new user
+        //username: req.body.username,
+        email: req.body.email,
+        password: req.body.password,
+        confirmationCode: code,
+    });
+
+    if (user.email.endsWith(emailHandle)) {             //Check for valid Vanderbilt email
+        console.log("Valid Email");
+    }
+    else {
+        alert("Enter valid Vanderbilt Email please");
+        res.redirect("/")
+    }
+    const transport = nodemailer.createTransport({      //set up nodemailer transporter with bot email address
+        service: "Gmail",
         auth: {
-          user: 'reusevandy@gmail.com',
-          pass: 'ReuseVandy2021!'
-        }
-    });
-    
-    var mailOptions = {
-        from: 'reusevandy@gmail.com',
-        to: useremail,
-        subject: 'Verification Code',
-        text: 'Your code is: ' + code.toString()
-    };
-
-    transporter.sendMail(mailOptions, function(error, info){
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('Email sent: ' + info.response);
+            user: "reusevandy21@gmail.com",
+            pass: "CS4278CCCKCWGA2021",
         }
     });
 
-    const user = new User({
-        email: useremail,
-        password: userpassword,
-        verification: code
-    })
-    User.insertMany(user, function(err){
-        if(err){
+    console.log("Check");
+    transport.sendMail({                                            //send the confirmation email to the new user
+        from: "reusevandy21@gmail.com",
+        to: user.email,
+        subject: "Please Confirm Your ReuseVandy Account!",
+        html: `<h1>Email Confirmation</h1>
+        <h2>Hello</h2>
+        <p>Thank you for registering an account on Reuse Vandy! Please confirm your email by clicking on the following link</p>
+        <a href=http://localhost:8081/confirm/${user.confirmationCode}> Click here</a>
+        </div>`,
+    });
+
+    User.insertMany(user, function (err) {
+        if (err) {
             console.log(err)
         }
-        else{
+        else {
             console.log("successfully saved user")
             res.redirect("/verify")
         }
@@ -107,6 +117,6 @@ app.post("/", function(req, res){
 })
 
 
-app.listen(3000, function(){
+app.listen(3000, function () {
     console.log("App is listening on port 3000");
 })
