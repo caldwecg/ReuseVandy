@@ -8,6 +8,7 @@ const nodemailer = require("nodemailer");
 const app = express();
 
 app.set('view engine', 'ejs');
+app.set('Views', path.join(__dirname, 'Views'));
 app.use(express.static("public"))
 
 mongoose.connect('mongodb://localhost:27017/usersDB')
@@ -55,6 +56,7 @@ app.get("/home", function(req, res){
     res.render("home");
 })
 
+<<<<<<< HEAD
 app.get("/failure", function(req, res){
     res.render("failure");
 })
@@ -69,6 +71,12 @@ app.post("/verify", function(req, res){
     code = req.body.code;
 
     
+=======
+
+app.post("/verify", function(req, res){
+
+    req.body.
+>>>>>>> 7a1a9650c8101cbc93104840f9e99fec8e6a972a
     res.redirect("home")
 })
 
