@@ -4,6 +4,7 @@ const request = require("request");
 const mongoose = require("mongoose")
 const nodemailer = require("nodemailer");
 
+
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -54,6 +55,10 @@ app.get("/home", function(req, res){
     res.render("home");
 })
 
+app.get("/failure", function(req, res){
+    res.render("failure");
+})
+
 app.get("/signup", function(req, res){
     console.log('request for signup recieved')
     res.render("signup");
@@ -62,7 +67,7 @@ app.get("/signup", function(req, res){
 app.post("/verify", function(req, res){
 
     code = req.body.code;
-    
+
     
     res.redirect("home")
 })
@@ -70,6 +75,8 @@ app.post("/verify", function(req, res){
 app.post("/", function(req, res){
     useremail = req.body.email
     userpassword = req.body.password
+    const emailHandle = "@vanderbilt.edu";
+
     code = Math.floor(Math.random() * 10000);
 
     var transporter = nodemailer.createTransport({
@@ -100,15 +107,23 @@ app.post("/", function(req, res){
         password: userpassword,
         verification: code
     })
-    User.insertMany(user, function(err){
-        if(err){
-            console.log(err)
+
+    User.findOne({email: useremail}, function(err, foundUser){
+        if (foundUser == null && useremail.endsWith(emailHandle)){
+            User.insertMany(user, function(err){
+                if(err){
+                    console.log(err)
+                }
+                else{
+                    console.log("successfully saved user")
+                    res.redirect("/verify")
+                }
+            });
         }
         else{
-            console.log("successfully saved user")
-            res.redirect("/verify")
+            res.redirect("/failure");
         }
-    });
+      })
 
 
 })
