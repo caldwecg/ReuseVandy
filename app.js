@@ -54,6 +54,11 @@ app.get("/home", function(req, res){
     res.render("home");
 })
 
+app.get("/signup", function(req, res){
+    console.log('request for signup recieved')
+    res.render("signup");
+})
+
 app.post("/verify", function(req, res){
 
     req.body.
