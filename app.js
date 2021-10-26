@@ -39,7 +39,10 @@ const userSchema = new mongoose.Schema({
     username: String,
     email: String,
     password: String,
-    confirmationCode: Number,
+    confirmationCode: {
+        type: String,
+        unique: true
+    },
     status: {
         type: String,
         enum: ['Pending', 'Active'],
@@ -54,7 +57,7 @@ const User = mongoose.model("User", userSchema);
 
 
 
-
+var bcrypt = require("bcryptjs");
 
 
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -80,6 +83,7 @@ app.get("/signup", function (req, res) {
     res.render("signup");
 })
 
+<<<<<<< HEAD
 app.post("/verify/:email", function (req, res) {
     var useremail = req.query.email;
     console.log(req.query.email)
@@ -87,13 +91,21 @@ app.post("/verify/:email", function (req, res) {
     console.log(code);
 
     User.findOne({email: useremail, confirmationCode: code }, function (err, foundUser) {
+=======
+app.post("/verify", function (req, res) {
+    //var useremail = req.query.user;
+    code = req.body.code;           //verification code entered by user
+    console.log(code);
+
+    User.findOne({ confirmationCode: code }, function (err, foundUser) {
+>>>>>>> 51ade8ebea3250971baa12af6c0b5ed2189adb22
         if (!foundUser) {
             console.log(code)
             console.log(useremail)
             console.log("User not found");
             return res.status(404).send({ message: "User Not found." });
         }
-        else{
+        else {
             foundUser.status = "Active";
             console.log("user found");
             foundUser.save(function (err, result) {
@@ -115,10 +127,16 @@ app.post("/verify/:email", function (req, res) {
 
 app.post("/signup", function (req, res) {
     useremail = req.body.email
-    userpassword = req.body.password
+    userpassword = bcrypt.hashSync(req.body.password, 8)
     const emailHandle = "@vanderbilt.edu";
 
-    code = Math.floor(Math.random() * 10000);
+    const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let code = '';
+    for (let i = 0; i < 8; i++) {
+        code += characters[Math.floor(Math.random() * characters.length)];
+    }
+    console.log(code);
+    //code = Math.floor(Math.random() * 10000);
 
     var transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -132,7 +150,7 @@ app.post("/signup", function (req, res) {
         from: 'reusevandy@gmail.com',
         to: useremail,
         subject: 'Verification Code',
-        text: 'Your code is: ' + code.toString()
+        text: 'Your code is: ' + code
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
@@ -157,7 +175,12 @@ app.post("/signup", function (req, res) {
                 }
                 else {
                     console.log("successfully saved user")
+<<<<<<< HEAD
                     res.redirect('/verify?email=' + useremail)
+=======
+                    //res.redirect('/verify?user=' + useremail)
+                    res.redirect("/verify")
+>>>>>>> 51ade8ebea3250971baa12af6c0b5ed2189adb22
                 }
             });
         }
@@ -173,16 +196,39 @@ app.post("/login", function (req, res) {
     useremail = req.body.email
     userpassword = req.body.password
 
-    User.findOne({ email: useremail, password: userpassword, status: 'Active' }, function (err, foundUser) {
+    User.findOne({ email: useremail/*, password: userpassword, status: 'Active' */ }, function (err, foundUser) {
 
-        if(err){
+        if (err) {
             console.log(err);
 
         }
+
         if (!foundUser) {
             console.log("User not found");
             return res.status(404).send({ message: "User Not found." });
         }
+
+        if (foundUser.status == "Pending") {
+            res.status(404).send({ message: "Pending Account. Please confrim in your Email" });
+            res.redirect('/verify');
+        }
+
+        var isValidPass = bcrypt.compareSync(userpassword, foundUser.password);
+        if (isValidPassword) {
+            console.log("Valid Password");
+        }
+        else {
+            console.log("Invalid Password");
+        }
+
+        if (foundUser.password) {
+            console.log("User not found");
+            return res.status(404).send({ message: "User Not found." });
+        }
+
+
+
+
 
         console.log("user found");
 
