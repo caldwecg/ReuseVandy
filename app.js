@@ -49,7 +49,7 @@ const User = mongoose.model("User", userSchema);
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get("/", function (req, res) {
-    res.render("signup");
+    res.render("login");
 })
 
 app.get("/verify", function (req, res) {
@@ -70,33 +70,36 @@ app.get("/signup", function (req, res) {
 })
 
 app.post("/verify", function (req, res) {
-
+    var useremail = req.query.user;
     code = req.body.code;           //verification code entered by user
     console.log(code);
 
-    User.findOne({ confirmationCode: code }, function (err, foundUser) {
+    User.findOne({ email: useremail, confirmationCode: code }, function (err, foundUser) {
         if (!foundUser) {
             console.log("User not found");
             return res.status(404).send({ message: "User Not found." });
         }
+        else{
+            foundUser.status = "Active";
+            console.log("user found");
+            foundUser.save(function (err, result) {
+                if (err) {
+                    cosole.log(err);
+                }
+                else {
+                    console.log(result);
+                }
+            });
+            res.redirect("/home")
+        }
 
-        foundUser.status = "Active";
-        console.log("user found");
-        foundUser.save(function (err, result) {
-            if (err) {
-                cosole.log(err);
-            }
-            else {
-                console.log(result);
-            }
-        });
 
     })
 
-    res.redirect("/home")
+
 })
 
-app.post("/", function (req, res) {
+app.post("/signup", function (req, res) {
     useremail = req.body.email
     userpassword = req.body.password
     const emailHandle = "@vanderbilt.edu";
@@ -140,13 +143,38 @@ app.post("/", function (req, res) {
                 }
                 else {
                     console.log("successfully saved user")
-                    res.redirect("/verify")
+                    res.redirect('/verify?user=' + useremail)
+                    //res.redirect("/verify")
                 }
             });
         }
         else {
             res.redirect("/failure");
         }
+    })
+
+
+})
+
+app.post("/login", function (req, res) {
+    useremail = req.body.email
+    userpassword = req.body.password
+
+    User.findOne({ email: useremail, password: userpassword, status: 'Active' }, function (err, foundUser) {
+
+        if(err){
+            console.log(err);
+
+        }
+        if (!foundUser) {
+            console.log("User not found");
+            return res.status(404).send({ message: "User Not found." });
+        }
+
+        console.log("user found");
+
+        res.redirect("/home")
+
     })
 
 
