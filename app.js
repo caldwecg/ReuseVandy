@@ -3,9 +3,20 @@ const bodyParser = require("body-parser");
 const request = require("request");
 const mongoose = require("mongoose")
 const nodemailer = require("nodemailer");
-
+const cookieParser = require("cookie-parser");
+const sessions = require('express-session');
 
 const app = express();
+
+
+app.use(sessions({
+    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+    saveUninitialized:true,
+    cookie: { maxAge: oneDay },
+    resave: false
+}));
+
+
 
 app.set('view engine', 'ejs');
 app.use(express.static("public"))
@@ -56,9 +67,9 @@ app.get("/verify", function (req, res) {
     res.render("verify");
 })
 
-app.get("/home", function (req, res) {
-    res.render("home");
-})
+// app.get("/home", function (req, res) {
+//     res.render("home");
+// })
 
 app.get("/failure", function (req, res) {
     res.render("failure");
@@ -69,13 +80,16 @@ app.get("/signup", function (req, res) {
     res.render("signup");
 })
 
-app.post("/verify", function (req, res) {
-    var useremail = req.query.user;
+app.post("/verify/:email", function (req, res) {
+    var useremail = req.query.email;
+    console.log(req.query.email)
     code = req.body.code;           //verification code entered by user
     console.log(code);
 
-    User.findOne({ email: useremail, confirmationCode: code }, function (err, foundUser) {
+    User.findOne({email: useremail, confirmationCode: code }, function (err, foundUser) {
         if (!foundUser) {
+            console.log(code)
+            console.log(useremail)
             console.log("User not found");
             return res.status(404).send({ message: "User Not found." });
         }
@@ -136,15 +150,14 @@ app.post("/signup", function (req, res) {
     })
 
     User.findOne({ email: useremail }, function (err, foundUser) {
-        if (/*foundUser == null && */useremail.endsWith(emailHandle)) {
+        if (foundUser == null && useremail.endsWith(emailHandle)) {
             User.insertMany(user, function (err) {
                 if (err) {
                     console.log(err)
                 }
                 else {
                     console.log("successfully saved user")
-                    res.redirect('/verify?user=' + useremail)
-                    //res.redirect("/verify")
+                    res.redirect('/verify?email=' + useremail)
                 }
             });
         }
