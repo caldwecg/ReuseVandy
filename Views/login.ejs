@@ -7,7 +7,14 @@
     <title>Reuse, Vandy!</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="/public/css/login.css">
+    <style>
+        .navbar-title {
+            color: white;
+            position: absolute;
+            left: 50%;
+            transform: translatex(-50%);
+        }
+    </style>
 <head>
     <body data-spy="scroll" data-target=".navbar" data-offset="50">
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: black">
@@ -26,6 +33,7 @@
     <div class="row">
         <div class="col-4"></div>
         <div class="col-4">
+<<<<<<< HEAD:Views/login.ejs
             <form action="/login" method="POST">
                 <div class="form-floating">
                     <label for="floatingInput">Email address</label>
@@ -44,6 +52,20 @@
                 <button class="w-10 btn btn-primary" type="submit">First time user?</button>
             </form>
 
+=======
+            <div class="form-group">
+                <label for="usr">Email:</label>
+                <input type="text" class="form-control" id="usr">
+            </div>
+            <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="password" class="form-control" id="pwd">
+            </div>
+            <a href="home.html">
+                <button type="button" class="btn btn-success">Submit</button>
+            </a>
+            <a href="/Views/signup.ejs">First time user?</a>
+>>>>>>> 3e82e2a394e10ded39c30f73d80f3d4cea31037d:HTML/login.html
         </div>
         <div class="col-4"></div>
     </div>
