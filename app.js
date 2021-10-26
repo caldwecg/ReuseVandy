@@ -83,22 +83,12 @@ app.get("/signup", function (req, res) {
     res.render("signup");
 })
 
-<<<<<<< HEAD
-app.post("/verify/:email", function (req, res) {
-    var useremail = req.query.email;
-    console.log(req.query.email)
-    code = req.body.code;           //verification code entered by user
-    console.log(code);
-
-    User.findOne({email: useremail, confirmationCode: code }, function (err, foundUser) {
-=======
 app.post("/verify", function (req, res) {
     //var useremail = req.query.user;
     code = req.body.code;           //verification code entered by user
     console.log(code);
 
     User.findOne({ confirmationCode: code }, function (err, foundUser) {
->>>>>>> 51ade8ebea3250971baa12af6c0b5ed2189adb22
         if (!foundUser) {
             console.log(code)
             console.log(useremail)
