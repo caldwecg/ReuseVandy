@@ -21,15 +21,20 @@ const postSchema = new mongoose.Schema({
         data: Buffer,
         contentType: String
     }
-    
+
 });
 
 const userSchema = new mongoose.Schema({
     username: String,
     email: String,
     password: String,
-    verification: Number,
-    posts: {type: [postSchema]}
+    confirmationCode: Number,
+    status: {
+        type: String,
+        enum: ['Pending', 'Active'],
+        default: 'Pending'
+    },
+    posts: { type: [postSchema] }
 });
 
 
@@ -38,40 +43,60 @@ const User = mongoose.model("User", userSchema);
 
 
 
-  
 
 
-app.use(bodyParser.urlencoded({extended:true}))
 
-app.get("/", function(req, res){
+app.use(bodyParser.urlencoded({ extended: true }))
+
+app.get("/", function (req, res) {
     res.render("signup");
 })
 
-app.get("/verify", function(req, res){
+app.get("/verify", function (req, res) {
     res.render("verify");
 })
 
-app.get("/home", function(req, res){
+app.get("/home", function (req, res) {
     res.render("home");
 })
 
-app.get("/failure", function(req, res){
+app.get("/failure", function (req, res) {
     res.render("failure");
 })
 
-app.get("/signup", function(req, res){
+app.get("/signup", function (req, res) {
     console.log('request for signup recieved')
     res.render("signup");
 })
 
-app.post("/verify", function(req, res){
+app.post("/verify", function (req, res) {
 
-    code = req.body.code;
+    code = req.body.code;           //verification code entered by user
+    console.log(code);
 
-    res.redirect("home")
+    User.findOne({ confirmationCode: code }, function (err, foundUser) {
+        if (!foundUser) {
+            console.log("User not found");
+            return res.status(404).send({ message: "User Not found." });
+        }
+
+        foundUser.status = "Active";
+        console.log("user found");
+        foundUser.save(function (err, result) {
+            if (err) {
+                cosole.log(err);
+            }
+            else {
+                console.log(result);
+            }
+        });
+
+    })
+
+    res.redirect("/home")
 })
 
-app.post("/", function(req, res){
+app.post("/", function (req, res) {
     useremail = req.body.email
     userpassword = req.body.password
     const emailHandle = "@vanderbilt.edu";
@@ -81,11 +106,11 @@ app.post("/", function(req, res){
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user: 'reusevandy@gmail.com',
-          pass: 'ReuseVandy2021!'
+            user: 'reusevandy@gmail.com',
+            pass: 'ReuseVandy2021!'
         }
     });
-    
+
     var mailOptions = {
         from: 'reusevandy@gmail.com',
         to: useremail,
@@ -93,41 +118,41 @@ app.post("/", function(req, res){
         text: 'Your code is: ' + code.toString()
     };
 
-    transporter.sendMail(mailOptions, function(error, info){
+    transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
-          console.log(error);
+            console.log(error);
         } else {
-          console.log('Email sent: ' + info.response);
+            console.log('Email sent: ' + info.response);
         }
     });
 
     const user = new User({
         email: useremail,
         password: userpassword,
-        verification: code
+        confirmationCode: code
     })
 
-    User.findOne({email: useremail}, function(err, foundUser){
-        if (foundUser == null && useremail.endsWith(emailHandle)){
-            User.insertMany(user, function(err){
-                if(err){
+    User.findOne({ email: useremail }, function (err, foundUser) {
+        if (/*foundUser == null && */useremail.endsWith(emailHandle)) {
+            User.insertMany(user, function (err) {
+                if (err) {
                     console.log(err)
                 }
-                else{
+                else {
                     console.log("successfully saved user")
                     res.redirect("/verify")
                 }
             });
         }
-        else{
+        else {
             res.redirect("/failure");
         }
-      })
+    })
 
 
 })
 
 
-app.listen(3000, function(){
+app.listen(3000, function () {
     console.log("App is listening on port 3000");
 })
