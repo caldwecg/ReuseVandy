@@ -10,13 +10,14 @@ const app = express();
 
 
 app.use(sessions({
-    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+    secret: "thisismysecrct",
     saveUninitialized:true,
-    cookie: { maxAge: oneDay },
     resave: false
 }));
 
+app.use(cookieParser());
 
+var sess;
 
 app.set('view engine', 'ejs');
 app.use(express.static("public"))
@@ -63,16 +64,42 @@ var bcrypt = require("bcryptjs");
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get("/", function (req, res) {
-    res.render("login");
+    sess = req.session
+    if(sess.email && sess.password){
+        return res.render("home");
+    }
+    else{
+        res.render("login")
+    }
+
+})
+
+app.get('/logout', function(req,res) {
+    req.session.destroy((err) => {
+        if(err) {
+            return console.log(err);
+        }
+        res.redirect('/');
+    });
+});
+
+app.get("/sell", function (req, res) {
+    res.render("sell");
 })
 
 app.get("/verify", function (req, res) {
     res.render("verify");
 })
 
-// app.get("/home", function (req, res) {
-//     res.render("home");
-// })
+app.get("/home", function (req, res) {
+    sess = req.session
+    if(sess.email && sess.password){
+        return res.render("home");
+    }
+    else{
+        res.render("login")
+    }
+})
 
 app.get("/failure", function (req, res) {
     res.render("failure");
@@ -165,12 +192,9 @@ app.post("/signup", function (req, res) {
                 }
                 else {
                     console.log("successfully saved user")
-<<<<<<< HEAD
-                    res.redirect('/verify?email=' + useremail)
-=======
+
                     //res.redirect('/verify?user=' + useremail)
                     res.redirect("/verify")
->>>>>>> 51ade8ebea3250971baa12af6c0b5ed2189adb22
                 }
             });
         }
@@ -186,7 +210,13 @@ app.post("/login", function (req, res) {
     useremail = req.body.email
     userpassword = req.body.password
 
-    User.findOne({ email: useremail/*, password: userpassword, status: 'Active' */ }, function (err, foundUser) {
+    sess = req.session;
+    sess.email = useremail;
+    sess.password = userpassword;
+
+
+
+    User.findOne({ email: useremail, password: userpassword }, function (err, foundUser) {
 
         if (err) {
             console.log(err);
@@ -198,23 +228,23 @@ app.post("/login", function (req, res) {
             return res.status(404).send({ message: "User Not found." });
         }
 
-        if (foundUser.status == "Pending") {
-            res.status(404).send({ message: "Pending Account. Please confrim in your Email" });
-            res.redirect('/verify');
-        }
+        // if (foundUser.status == "Pending") {
+        //     res.status(404).send({ message: "Pending Account. Please confrim in your Email" });
+        //     res.redirect('/verify');
+        // }
 
-        var isValidPass = bcrypt.compareSync(userpassword, foundUser.password);
-        if (isValidPassword) {
-            console.log("Valid Password");
-        }
-        else {
-            console.log("Invalid Password");
-        }
+        // var isValidPass = bcrypt.compareSync(userpassword, foundUser.password);
+        // if (isValidPassword) {
+        //     console.log("Valid Password");
+        // }
+        // else {
+        //     console.log("Invalid Password");
+        // }
 
-        if (foundUser.password) {
-            console.log("User not found");
-            return res.status(404).send({ message: "User Not found." });
-        }
+        // if (foundUser.password) {
+        //     console.log("User not found");
+        //     return res.status(404).send({ message: "User Not found." });
+        // }
 
 
 
@@ -223,7 +253,6 @@ app.post("/login", function (req, res) {
         console.log("user found");
 
         res.redirect("/home")
-
     })
 
 

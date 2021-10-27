@@ -18,11 +18,15 @@
             <ul class="nav navbar-nav">
                 <li class="active"><a href="home.html">Home</a></li>
                 <li><a href="buy.html">Buy</a></li>
-                <li><a href="sell.html">Sell</a></li>
+                <form action="/sell" method="GET">
+                    <li><button type="submit">Sell</button></li>
+                </form>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="profile.html"><span class="glyphicon glyphicon-log-in"></span> Profile</a></li>
-                <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                <form action="/logout" method="GET">
+                    <li><button type="submit"><span class="glyphicon glyphicon-log-in"></span> Logout</button></li>
+                </form>
             </ul>
         </div>
     </nav>
