@@ -193,7 +193,8 @@ app.post("/verify", function (req, res) {
 
 app.post("/signup", function (req, res) {
     useremail = req.body.email
-    userpassword = bcrypt.hashSync(req.body.password, 8)
+    // userpassword = bcrypt.hashSync(req.body.password, 8)
+    userpassword = req.body.password
     const emailHandle = "@vanderbilt.edu";
 
     const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -265,7 +266,7 @@ app.post("/login", function (req, res) {
 
 
 
-    User.findOne({ email: useremail, password: userpassword }, function (err, foundUser) {
+    User.findOne({ email: useremail, password: userpassword, status: "Active" }, function (err, foundUser) {
 
         if (err) {
             console.log(err);
