@@ -6,6 +6,7 @@ const nodemailer = require("nodemailer");
 const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
 
+
 const app = express();
 
 
@@ -28,6 +29,9 @@ const postSchema = new mongoose.Schema({
     title: String,
     desc: String,
     price: Number,
+    condition: String,
+    category: String,
+    phone: Number,
     img:
     {
         data: Buffer,
@@ -84,7 +88,13 @@ app.get('/logout', function(req,res) {
 });
 
 app.get("/sell", function (req, res) {
-    res.render("sell");
+    sess = req.session
+    if(sess.email && sess.password){
+        return res.render("sell");
+    }
+    else{
+        res.render("login")
+    }
 })
 
 app.get("/verify", function (req, res) {
@@ -108,6 +118,45 @@ app.get("/failure", function (req, res) {
 app.get("/signup", function (req, res) {
     console.log('request for signup recieved')
     res.render("signup");
+})
+
+app.get("/profile", function (req, res) {
+    sess = req.session
+    if(sess.email && sess.password){
+        return res.render("profile");
+    }
+    else{
+        res.render("login")
+    }
+})
+
+
+app.post("/sell", function (req, res) {
+    title = req.body.title;
+    desc = req.body.description;
+    price = req.body.price;
+    phone = req.body.phone;
+    img = req.body.file;
+
+    console.log(title)
+    console.log(desc)
+    console.log(price)
+    console.log(phone)
+    console.log(img)
+
+    // const postSchema = new mongoose.Schema({
+    //     title: String,
+    //     desc: String,
+    //     price: Number,
+    //     condition: String,
+    //     category: String,
+    //     phone: Number,
+    //     img:
+    //     {
+    //         data: Buffer,
+    //         contentType: String
+    //     }
+    // });
 })
 
 app.post("/verify", function (req, res) {

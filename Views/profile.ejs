@@ -41,15 +41,33 @@
     </style>
 
 </head><body data-spy="scroll" data-target=".navbar" data-offset="50">
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: black">
-    <img src="/images/logo.png" height="180" width="180" alt="image not displayable">
-    <ul class="navbar-nav ml-auto">
-        <li class="nav-item"><h1><a class="nav-link" href="/HTML/home.html">Home</a></h1></li>
-        <li class="nav-item"><h1><a class="nav-link" href="/HTML/buy.html">Buy</a></h1></li>
-        <li class="nav-item"><h1><a class="nav-link" href="/HTML/sell.html">Sell</a></h1></li>
-        <li class="nav-item"><h1><a class="nav-link" href="/HTML/login.html">Logout</a></h1></li>
-    </ul>
-</nav><br>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <img src="/images/logo.png">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="home.html">Reuse, Vandy!</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <form action="/home" method="GET">
+                    <li><button type="submit">Home</button></li>
+                </form>
+                <form action="/buy" method="GET">
+                    <li><button>Buy</button></li>
+                </form>
+                <form action="/sell" method="GET">
+                    <li><button type="submit">Sell</button></li>
+                </form>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <form action="/profile" method="GET">
+                    <li><button type="submit"><span class="glyphicon glyphicon-log-in"></span> Profile</button></li>
+                </form>
+                <form action="/logout" method="GET">
+                    <li><button type="submit"><span class="glyphicon glyphicon-log-in"></span> Logout</button></li>
+                </form>
+            </ul>
+        </div>
+    </nav>
 
 <h1 style="text-align:center">My Profile</h1>
 
