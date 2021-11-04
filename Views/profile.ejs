@@ -1,73 +1,8 @@
 <!DOCTYPE html>
-<html lang="en"><head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<html lang="en">
+<%- include('../partials/header') %>
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
-    <title>Reuse, Vandy!</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <style>
-        #footer {
-            position:fixed;
-            bottom:0;
-            width:100%;
-            height:80px;   /* Height of the footer */
-            background:black;
-
-        }
-
-        .btns {
-            margin: 0;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            -ms-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
-        }
-
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            display: inline;
-        }
-
-        li {
-            display:inline;
-        }
-
-        h1 {text-align: center;}
-    </style>
-
-</head><body data-spy="scroll" data-target=".navbar" data-offset="50">
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <img src="/image/logo.png" height="200" width="200">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="home.html">Reuse, Vandy!</a>
-            </div>
-            <ul class="nav navbar-nav">
-                <form action="/home" method="GET">
-                    <li><button type="submit">Home</button></li>
-                </form>
-                <form action="/buy" method="GET">
-                    <li><button>Buy</button></li>
-                </form>
-                <form action="/sell" method="GET">
-                    <li><button type="submit">Sell</button></li>
-                </form>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <form action="/profile" method="GET">
-                    <li><button type="submit"><span class="glyphicon glyphicon-log-in"></span> Profile</button></li>
-                </form>
-                <form action="/logout" method="GET">
-                    <li><button type="submit"><span class="glyphicon glyphicon-log-in"></span> Logout</button></li>
-                </form>
-            </ul>
-        </div>
-    </nav>
 
 <h1 style="text-align:center">My Profile</h1>
 
@@ -159,4 +94,5 @@
     </div>
 
 </div>
-</body></html>
+</body>
+</html>

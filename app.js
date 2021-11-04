@@ -277,7 +277,7 @@ app.post("/login", function (req, res) {
             console.log("User not found");
             return res.status(404).send({ message: "User Not found." });
         }
-
+ 
         // if (foundUser.status == "Pending") {
         //     res.status(404).send({ message: "Pending Account. Please confrim in your Email" });
         //     res.redirect('/verify');
