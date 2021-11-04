@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html lang="en">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -42,6 +43,23 @@
                     <label for="title">Listing title</label>
                     <textarea class="form-control" rows="1" id="title"
                         placeholder="Enter a title for your listing (i.e. Used Leather Reclining Chair)"></textarea>
+=======
+<html lang = "en">
+<%- include('../partials/header') %>
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+    <div class="jumbotron text-center">
+        <h1>Sell Items</h1>
+    </div>
+    <div>
+        <h2 class = "text-center">Create a new listing:</h2>
+    </div>
+
+    <form action="/sell" method="POST">
+        <div class="row">
+            <div class="col-sm-6 mx-auto">
+                <div class="form-group">
+                    <label for="title">Listing title</label>
+                    <textarea name="title" class="form-control" rows="1" id="title" placeholder="Enter a title for your listing (i.e. Used Leather Reclining Chair)"></textarea>
                 </div>
             </div>
         </div>
@@ -49,12 +67,29 @@
             <div class="col-sm-8 mx-auto">
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea class="form-control" rows="3" id="description"
-                        placeholder="Enter a description for your listing"></textarea>
+                    <textarea name="description" class="form-control" rows="3" id="description" placeholder="Enter a description for your listing"></textarea>
+>>>>>>> 212e81a881aa1fe57554cc73f92e36eeeddf8e8c
                 </div>
             </div>
         </div>
         <div class="row">
+<<<<<<< HEAD
+            <div class="col-sm-8 mx-auto">
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" rows="3" id="description"
+                        placeholder="Enter a description for your listing"></textarea>
+=======
+            <div class="col-sm-6 mx-auto">
+                <div class="form-group">
+                    <label for="price">Asking price</label>
+                    <textarea name="price" class="form-control" rows="1" id="price" placeholder="Enter your initial asking price (note that buyers may attempt to negotiate this price)"></textarea>
+>>>>>>> 212e81a881aa1fe57554cc73f92e36eeeddf8e8c
+                </div>
+            </div>
+        </div>
+        <div class="row">
+<<<<<<< HEAD
             <div class="col-sm-6 mx-auto">
                 <div class="form-group">
                     <label for="price">Asking price</label>
@@ -64,15 +99,25 @@
             </div>
         </div>
         <div class="row">
+=======
+>>>>>>> 212e81a881aa1fe57554cc73f92e36eeeddf8e8c
             <div class="col-sm-8 mx-auto">
                 <div class="form-group">
                     <label for="sel1">Condition and category:</label>
                     <select class="form-control" id="sel1">
+<<<<<<< HEAD
                         <option>(Select condition)</option>
                         <option>New</option>
                         <option>Like new</option>
                         <option>Used</option>
                         <option>Worn</option>
+=======
+                    <option>(Select condition)</option>
+                    <option>New</option>
+                    <option>Like new</option>
+                    <option>Used</option>
+                    <option>Worn</option>
+>>>>>>> 212e81a881aa1fe57554cc73f92e36eeeddf8e8c
                     </select>
                 </div>
                 <div>
@@ -92,13 +137,18 @@
             <div class="col-sm-6 mx-auto">
                 <div class="form-group">
                     <label for="phone">Phone number (optional)</label>
+<<<<<<< HEAD
                     <textarea class="form-control" rows="1" id="phone"
                         placeholder="Enter your phone number so buyers can contact you"></textarea>
+=======
+                    <textarea name="phone" class="form-control" rows="1" id="phone" placeholder="Enter your phone number so buyers can contact you"></textarea>
+>>>>>>> 212e81a881aa1fe57554cc73f92e36eeeddf8e8c
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-2 mx-auto">
+<<<<<<< HEAD
                 <form action="file_upload.php" method="POST" enctype="multipart/form-data">
                     <h4>Upload Images</h4>
                     <input type="file" name="files[]" multiple accept="image/x-png,image/gif,image/jpeg">
@@ -113,6 +163,21 @@
             </div>
         </div>
 
+=======
+                    <h4>Upload Images</h4>       
+                        <input type="file" name="file" multiple accept="image/x-png,image/gif,image/jpeg">
+                    <br><br>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col text-center">
+                <button class="btn btn-primary" type="submit">Create my listing!</button>
+            </div>
+        </div>
+    </form>
+
+>>>>>>> 212e81a881aa1fe57554cc73f92e36eeeddf8e8c
 
 
     </body>

@@ -1,55 +1,8 @@
 <!DOCTYPE html>
-<html lang="en"><head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<html lang="en">
+<%- include('../partials/header') %>
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
-    <title>Reuse, Vandy!</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <style>
-        #footer {
-            position:fixed;
-            bottom:0;
-            width:100%;
-            height:80px;   /* Height of the footer */
-            background:black;
-
-        }
-
-        .btns {
-            margin: 0;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            -ms-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
-        }
-
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            display: inline;
-        }
-
-        li {
-            display:inline;
-        }
-
-        h1 {text-align: center;}
-    </style>
-
-</head><body data-spy="scroll" data-target=".navbar" data-offset="50">
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: black">
-    <img src="/images/logo.png" height="180" width="180" alt="image not displayable">
-    <ul class="navbar-nav ml-auto">
-        <li class="nav-item"><h1><a class="nav-link" href="/HTML/home.html">Home</a></h1></li>
-        <li class="nav-item"><h1><a class="nav-link" href="/HTML/buy.html">Buy</a></h1></li>
-        <li class="nav-item"><h1><a class="nav-link" href="/HTML/sell.html">Sell</a></h1></li>
-        <li class="nav-item"><h1><a class="nav-link" href="/HTML/login.html">Logout</a></h1></li>
-    </ul>
-</nav><br>
 
 <h1 style="text-align:center">My Profile</h1>
 
@@ -116,15 +69,15 @@
     <div class="col-sm-8 offset-sm-2">
         <ul>
             <li>
-                <img src="/images/chair.jpg" height="200" width="200" alt="image not displayable">
+                <img src="/image/chair.jpg" height="200" width="200" alt="image not displayable">
             </li>
 
             <li>
-                <img src="/images/textbook.jpg" height="200" width="200" alt="image not displayable">
+                <img src="/image/textbook.jpg" height="200" width="200" alt="image not displayable">
             </li>
 
             <li>
-                <img src="/images/couch.jpg" height="200" width="200" alt="image not displayable">
+                <img src="/image/couch.jpg" height="200" width="200" alt="image not displayable">
             </li>
         </ul>
     </div>
@@ -141,4 +94,5 @@
     </div>
 
 </div>
-</body></html>
+</body>
+</html>

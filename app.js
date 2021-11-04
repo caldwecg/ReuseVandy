@@ -13,6 +13,7 @@ const nodemailer = require("nodemailer");
 const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
 
+
 const app = express();
 
 //Establishes a User Session sess to supervise user acess
@@ -39,6 +40,11 @@ const postSchema = new mongoose.Schema({
     desc: String,
     price: Number,
     condition: String,
+<<<<<<< HEAD
+=======
+    category: String,
+    phone: Number,
+>>>>>>> 212e81a881aa1fe57554cc73f92e36eeeddf8e8c
     img:
     {
         data: Buffer,
@@ -68,7 +74,13 @@ const userSchema = new mongoose.Schema({
 //Creates instance of project database
 const User = mongoose.model("User", userSchema);
 
+<<<<<<< HEAD
 //Creates a Javascript object for encrypting user passwaords
+=======
+const Post = mongoose.model("Post", postSchema);
+
+
+>>>>>>> 212e81a881aa1fe57554cc73f92e36eeeddf8e8c
 var bcrypt = require("bcryptjs");
 
 
@@ -100,10 +112,17 @@ app.get('/logout', function (req, res) {
 //Client request to view sell page. Only renders if user is logged in, otherwise redirects to login page
 app.get("/sell", function (req, res) {
     sess = req.session
+<<<<<<< HEAD
     if (sess.email && sess.password) {
         return res.render("sell");
     }
     else {
+=======
+    if(sess.email && sess.password){
+        return res.render("sell");
+    }
+    else{
+>>>>>>> 212e81a881aa1fe57554cc73f92e36eeeddf8e8c
         res.render("login")
     }
 })
@@ -135,10 +154,77 @@ app.get("/signup", function (req, res) {
     res.render("signup");
 })
 
+<<<<<<< HEAD
 //Functionality for the Verification Page.
 app.post("/verify", function (req, res) {
 
     code = req.body.code;           //Reads verification code entered by user
+=======
+app.get("/profile", function (req, res) {
+    sess = req.session
+    if(sess.email && sess.password){
+        return res.render("profile");
+    }
+    else{
+        res.render("login")
+    }
+})
+
+app.get("/buy", function (req, res) {
+    sess = req.session
+    if(sess.email && sess.password){
+        Post.find({}, function (err, foundPosts) {
+            if (!foundPosts) {
+                return res.status(404).send({ message: "No posts found." });
+            }
+            else {
+                console.log("posts found");
+            
+            }
+            return res.render("buy", {posts: foundPosts});
+
+        })
+    }
+    else{
+        res.render("login")
+    }
+})
+
+app.post("/sell", function (req, res) {
+    title = req.body.title;
+    desc = req.body.description;
+    price = req.body.price;
+    phone = req.body.phone;
+    img = req.body.file;
+
+    console.log(title)
+    console.log(desc)
+    console.log(price)
+    console.log(phone)
+    console.log(img)
+
+    const post = new Post({
+        title: title,
+        desc: desc,
+        price: price,
+        phone: phone
+    });
+
+    Post.insertMany(post, function (err) {
+        if (err) {
+            console.log(err)
+        }
+        else {
+            console.log("successfully saved post")
+
+            res.redirect("/profile")
+        }
+    });
+})
+
+app.post("/verify", function (req, res) {
+    code = req.body.code;           //verification code entered by user
+>>>>>>> 212e81a881aa1fe57554cc73f92e36eeeddf8e8c
     console.log(code);
 
     //Finds a user in the database with the unique verification code entered
@@ -147,7 +233,6 @@ app.post("/verify", function (req, res) {
         //If no user found with code, notify user
         if (!foundUser) {
             console.log(code)
-            console.log(useremail)
             console.log("User not found");
             return res.status(404).send({ message: "User Not found." });
         }
@@ -163,7 +248,11 @@ app.post("/verify", function (req, res) {
                     console.log(result);
                 }
             });
+<<<<<<< HEAD
             res.redirect("/login")           //User is redirected to login for first time
+=======
+            res.redirect("/login")
+>>>>>>> 212e81a881aa1fe57554cc73f92e36eeeddf8e8c
         }
 
 
@@ -174,11 +263,17 @@ app.post("/verify", function (req, res) {
 
 //Functionality for the Account Creation Page
 app.post("/signup", function (req, res) {
+<<<<<<< HEAD
 
     useremail = req.body.email                                         //Reads username and email
     //userpassword = bcrypt.hashSync(req.body.password, 8)
     userpassword = req.body.password
 
+=======
+    useremail = req.body.email
+    // userpassword = bcrypt.hashSync(req.body.password, 8)
+    userpassword = req.body.password
+>>>>>>> 212e81a881aa1fe57554cc73f92e36eeeddf8e8c
     const emailHandle = "@vanderbilt.edu";
 
     //Creates a unique confirmation code for account verification
@@ -263,8 +358,14 @@ app.post("/login", function (req, res) {
     sess.email = useremail;
     sess.password = userpassword;
 
+<<<<<<< HEAD
     //Checks User database to ensure email and password are correct
     User.findOne({ email: useremail, password: userpassword }, function (err, foundUser) {
+=======
+
+
+    User.findOne({ email: useremail, password: userpassword, status: "Active" }, function (err, foundUser) {
+>>>>>>> 212e81a881aa1fe57554cc73f92e36eeeddf8e8c
 
         if (err) {
             console.log(err);
@@ -276,12 +377,20 @@ app.post("/login", function (req, res) {
             console.log("User not found");
             return res.status(404).send({ message: "User Not found." });
         }
+<<<<<<< HEAD
 
         //User account still pending (email not verified)
         if (foundUser.status == "Pending") {
             //res.status(404).send({ message: "Pending Account. Please confrim in your Email" });
             res.redirect("/verify");
         }
+=======
+ 
+        // if (foundUser.status == "Pending") {
+        //     res.status(404).send({ message: "Pending Account. Please confrim in your Email" });
+        //     res.redirect('/verify');
+        // }
+>>>>>>> 212e81a881aa1fe57554cc73f92e36eeeddf8e8c
 
         //Incomplete Feature: Password encryption
         // var isValidPass = bcrypt.compareSync(userpassword, foundUser.password);
