@@ -60,6 +60,7 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", userSchema);
 
+const Post = mongoose.model("Post", postSchema);
 
 
 var bcrypt = require("bcryptjs");
@@ -130,6 +131,25 @@ app.get("/profile", function (req, res) {
     }
 })
 
+app.get("/buy", function (req, res) {
+    sess = req.session
+    if(sess.email && sess.password){
+        Post.find({}, function (err, foundPosts) {
+            if (!foundPosts) {
+                return res.status(404).send({ message: "No posts found." });
+            }
+            else {
+                console.log("posts found");
+            
+            }
+            return res.render("buy", {posts: foundPosts});
+
+        })
+    }
+    else{
+        res.render("login")
+    }
+})
 
 app.post("/sell", function (req, res) {
     title = req.body.title;
@@ -144,30 +164,32 @@ app.post("/sell", function (req, res) {
     console.log(phone)
     console.log(img)
 
-    // const postSchema = new mongoose.Schema({
-    //     title: String,
-    //     desc: String,
-    //     price: Number,
-    //     condition: String,
-    //     category: String,
-    //     phone: Number,
-    //     img:
-    //     {
-    //         data: Buffer,
-    //         contentType: String
-    //     }
-    // });
+    const post = new Post({
+        title: title,
+        desc: desc,
+        price: price,
+        phone: phone
+    });
+
+    Post.insertMany(post, function (err) {
+        if (err) {
+            console.log(err)
+        }
+        else {
+            console.log("successfully saved post")
+
+            res.redirect("/profile")
+        }
+    });
 })
 
 app.post("/verify", function (req, res) {
-    //var useremail = req.query.user;
     code = req.body.code;           //verification code entered by user
     console.log(code);
 
     User.findOne({ confirmationCode: code }, function (err, foundUser) {
         if (!foundUser) {
             console.log(code)
-            console.log(useremail)
             console.log("User not found");
             return res.status(404).send({ message: "User Not found." });
         }
@@ -182,7 +204,7 @@ app.post("/verify", function (req, res) {
                     console.log(result);
                 }
             });
-            res.redirect("/home")
+            res.redirect("/login")
         }
 
 
