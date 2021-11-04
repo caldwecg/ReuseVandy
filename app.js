@@ -265,7 +265,6 @@ app.post("/signup", function (req, res) {
                 else {
                     console.log("successfully saved user")
 
-                    //res.redirect('/verify?user=' + useremail)
                     res.redirect("/verify")
                 }
             });
