@@ -42,6 +42,7 @@ const postSchema = new mongoose.Schema({
     condition: String,
     category: String,
     phone: Number,
+    date: Date,
     tags: [String],
     img:
     {
@@ -93,7 +94,7 @@ app.get("/", function (req, res) {
 })
 
 //Client Request to end their session; redirects to the login page after session destruction.
-app.get('/logout', function (req, res) {
+app.get("/logout", function (req, res) {
     req.session.destroy((err) => {
         if (err) {
             return console.log(err);
@@ -105,10 +106,10 @@ app.get('/logout', function (req, res) {
 //Client request to view sell page. Only renders if user is logged in, otherwise redirects to login page
 app.get("/sell", function (req, res) {
     sess = req.session;
-    if(sess.email && sess.password){
+    if (sess.email && sess.password) {
         return res.render("sell");
     }
-    else{
+    else {
         res.render("login")
     }
 })
@@ -145,30 +146,44 @@ app.get("/signup", function (req, res) {
 
 app.get("/profile", function (req, res) {
     sess = req.session
-    if(sess.email && sess.password){
+    if (sess.email && sess.password) {
         return res.render("profile");
     }
-    else{
+    else {
         res.render("login")
     }
 })
 
+//Helper Function to sort listings by date
+function sortByProperty(property) {
+    return function (a, b) {
+        if ((a[property] - b[property]) < 0)
+            return 1;
+        else if ((a[property] - b[property]) > 0)
+            return -1;
+
+        return 0;
+    }
+}
+
 app.get("/buy", function (req, res) {
     sess = req.session
-    if(sess.email && sess.password){
+    if (sess.email && sess.password) {
         Post.find({}, function (err, foundPosts) {
             if (!foundPosts) {
                 return res.status(404).send({ message: "No posts found." });
             }
             else {
                 console.log("posts found");
-            
+                console.log(foundPosts)
+                foundPosts.sort(sortByProperty("date"));   //sorts foundPosts by date
+                console.log(foundPosts)
             }
-            return res.render("buy", {posts: foundPosts});
+            return res.render("buy", { posts: foundPosts });
 
         })
     }
-    else{
+    else {
         res.render("login")
     }
 })
@@ -180,7 +195,7 @@ app.get("/search", function (req, res) {
     console.log(regex)
 
     sess = req.session
-    if(sess.email && sess.password){
+    if (sess.email && sess.password) {
         Post.find({ tags: { $in: regex } }, function (err, foundPosts) {
             if (!foundPosts) {
                 return res.status(404).send({ message: "No posts found." });
@@ -188,28 +203,29 @@ app.get("/search", function (req, res) {
             else {
                 console.log("posts found");
                 console.log(foundPosts);
-
-            
+                foundPosts.sort(sortByProperty("date"));   //sorts foundPosts by date
             }
-            return res.render("search", {posts: foundPosts});
+            return res.render("search", { posts: foundPosts });
 
         })
     }
-    else{
+    else {
         res.render("login")
     }
 })
 
 app.post("/buy", function (req, res) {
- 
+
 
     res.redirect('/search?keywords=' + req.body.keywords)
 
 })
 
 
-
+//Functionality for listing creation
 app.post("/sell", function (req, res) {
+
+    //Reads listing information from the form
     title = req.body.title;
     desc = req.body.description;
     price = req.body.price;
@@ -217,17 +233,24 @@ app.post("/sell", function (req, res) {
     img = req.body.file;
     const tags = req.body.title.replace(/ +/g, " ").split(" ")
 
+    //Saves the current date and time of listing creation
+    var currentDate = new Date();
+    date = currentDate;
+
     console.log(title)
     console.log(desc)
     console.log(price)
     console.log(phone)
+    console.log(date)
     console.log(tags)
+
 
     const post = new Post({
         title: title,
         desc: desc,
         price: price,
         phone: phone,
+        date: date,
         tags: tags
     });
 
@@ -270,7 +293,7 @@ app.post("/verify", function (req, res) {
                     console.log(result);
                 }
             });
-            res.redirect("/login")           //User is redirected to login for first time
+            res.render("login")           //Renders login page so new user can sign in
 
         }
 
@@ -395,6 +418,7 @@ app.post("/login", function (req, res) {
 
 
         //Incomplete Feature: Password encryption
+
         // var isValidPass = bcrypt.compareSync(userpassword, foundUser.password);
         // if (isValidPassword) {
         //     console.log("Valid Password");
