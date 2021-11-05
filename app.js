@@ -172,6 +172,37 @@ app.get("/buy", function (req, res) {
     }
 })
 
+app.get("/search", function (req, res) {
+    keywords = req.body.keywords;
+    console.log(keywords)
+
+    sess = req.session
+    if(sess.email && sess.password){
+        Post.find({}, function (err, foundPosts) {
+            if (!foundPosts) {
+                return res.status(404).send({ message: "No posts found." });
+            }
+            else {
+                console.log("posts found");
+            
+            }
+            return res.render("search", {posts: foundPosts});
+
+        })
+    }
+    else{
+        res.render("login")
+    }
+})
+
+app.post("/buy", function (req, res) {
+
+
+
+    res.redirect("/search")
+
+})
+
 app.post("/sell", function (req, res) {
     title = req.body.title;
     desc = req.body.description;
@@ -374,11 +405,6 @@ app.post("/login", function (req, res) {
     })
 
 
-})
-
-app.post("/sell", function (req, res) {
-    postTitle = req.body.title
-    console.log(postTitle)
 })
 
 
