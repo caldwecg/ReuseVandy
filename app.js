@@ -42,6 +42,7 @@ const postSchema = new mongoose.Schema({
     condition: String,
     category: String,
     phone: Number,
+    tags: [String],
     img:
     {
         data: Buffer,
@@ -173,17 +174,21 @@ app.get("/buy", function (req, res) {
 })
 
 app.get("/search", function (req, res) {
-    keywords = req.body.keywords;
+    const keywords = req.query.keywords.replace(/ +/g, " ").split(" ")
     console.log(keywords)
+    regex = keywords.join("|");
+    console.log(regex)
 
     sess = req.session
     if(sess.email && sess.password){
-        Post.find({}, function (err, foundPosts) {
+        Post.find({ tags: { $in: regex } }, function (err, foundPosts) {
             if (!foundPosts) {
                 return res.status(404).send({ message: "No posts found." });
             }
             else {
                 console.log("posts found");
+                console.log(foundPosts);
+
             
             }
             return res.render("search", {posts: foundPosts});
@@ -196,12 +201,13 @@ app.get("/search", function (req, res) {
 })
 
 app.post("/buy", function (req, res) {
+ 
 
-
-
-    res.redirect("/search")
+    res.redirect('/search?keywords=' + req.body.keywords)
 
 })
+
+
 
 app.post("/sell", function (req, res) {
     title = req.body.title;
@@ -209,18 +215,20 @@ app.post("/sell", function (req, res) {
     price = req.body.price;
     phone = req.body.phone;
     img = req.body.file;
+    const tags = req.body.title.replace(/ +/g, " ").split(" ")
 
     console.log(title)
     console.log(desc)
     console.log(price)
     console.log(phone)
-    console.log(img)
+    console.log(tags)
 
     const post = new Post({
         title: title,
         desc: desc,
         price: price,
-        phone: phone
+        phone: phone,
+        tags: tags
     });
 
     Post.insertMany(post, function (err) {
