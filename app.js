@@ -70,15 +70,15 @@ const userSchema = new mongoose.Schema({
 });
 
 
-//Creates instance of project database
+//Creates instance of project databases
 const User = mongoose.model("User", userSchema);
-
 const Post = mongoose.model("Post", postSchema);
 
+//Encryption Object
 var bcrypt = require("bcryptjs");
 
-
 app.use(bodyParser.urlencoded({ extended: true }))
+
 
 //Client requests root page. If the user is logged in to a session, user is directed to home page.
 //Otherwise, user is directed to login page.
@@ -93,6 +93,7 @@ app.get("/", function (req, res) {
 
 })
 
+
 //Client Request to end their session; redirects to the login page after session destruction.
 app.get("/logout", function (req, res) {
     req.session.destroy((err) => {
@@ -102,6 +103,7 @@ app.get("/logout", function (req, res) {
         res.redirect('/');
     });
 });
+
 
 //Client request to view sell page. Only renders if user is logged in, otherwise redirects to login page
 app.get("/sell", function (req, res) {
@@ -114,10 +116,12 @@ app.get("/sell", function (req, res) {
     }
 })
 
+
 //Renders verification page (following an account creation)
 app.get("/verify", function (req, res) {
     res.render("verify");
 })
+
 
 //Renders home page. Only renders if user is logged in, otherwise redirects to login page
 app.get("/home", function (req, res) {
@@ -130,10 +134,12 @@ app.get("/home", function (req, res) {
     }
 })
 
+
 //Renders a failure page if invalid emails are given during account creation
 app.get("/failure", function (req, res) {
     res.render("failure");
 })
+
 
 //Renders signup page when Client 
 app.get("/signup", function (req, res) {
@@ -142,8 +148,7 @@ app.get("/signup", function (req, res) {
 })
 
 
-
-
+//Renders user profile as long as there is a valid session. Otherwise, redirects to login page
 app.get("/profile", function (req, res) {
     sess = req.session
     if (sess.email && sess.password) {
@@ -153,6 +158,7 @@ app.get("/profile", function (req, res) {
         res.render("login")
     }
 })
+
 
 //Helper Function to sort listings by date
 function sortByProperty(property) {
@@ -166,6 +172,9 @@ function sortByProperty(property) {
     }
 }
 
+
+//Client request for Buy page is handled here. Renders the Buy Page with
+//recent item listings; most recently created listings appearing at the top
 app.get("/buy", function (req, res) {
     sess = req.session
     if (sess.email && sess.password) {
@@ -175,9 +184,10 @@ app.get("/buy", function (req, res) {
             }
             else {
                 console.log("posts found");
-                console.log(foundPosts)
-                foundPosts.sort(sortByProperty("date"));   //sorts foundPosts by date
-                console.log(foundPosts)
+
+                //sorts foundPosts by date
+                foundPosts.sort(sortByProperty("date"));
+                //console.log(foundPosts)
             }
             return res.render("buy", { posts: foundPosts });
 
@@ -188,12 +198,17 @@ app.get("/buy", function (req, res) {
     }
 })
 
+
+//Handling of a client item search
 app.get("/search", function (req, res) {
+
+    //Parses search bar for the keywords entered by user
     const keywords = req.query.keywords.replace(/ +/g, " ").split(" ")
     console.log(keywords)
     regex = keywords.join("|");
     console.log(regex)
 
+    //Searches Posts DB for listings containing keyword in Title/Description
     sess = req.session
     if (sess.email && sess.password) {
         Post.find({ tags: { $in: regex } }, function (err, foundPosts) {
@@ -203,7 +218,9 @@ app.get("/search", function (req, res) {
             else {
                 console.log("posts found");
                 console.log(foundPosts);
-                foundPosts.sort(sortByProperty("date"));   //sorts foundPosts by date
+
+                //sorts foundPosts by date
+                foundPosts.sort(sortByProperty("date"));
             }
             return res.render("search", { posts: foundPosts });
 
@@ -214,9 +231,10 @@ app.get("/search", function (req, res) {
     }
 })
 
+
+//Server Response to a search on the Buy Page. Keywords are passed in the URL to be processed
+//on the search page
 app.post("/buy", function (req, res) {
-
-
     res.redirect('/search?keywords=' + req.body.keywords)
 
 })
@@ -269,7 +287,9 @@ app.post("/sell", function (req, res) {
 
 //Functionality for the Verification Page.
 app.post("/verify", function (req, res) {
-    code = req.body.code;           //verification code entered by user
+
+    //verification code entered by user
+    code = req.body.code;
     console.log(code);
 
     //Finds a user in the database with the unique verification code entered
@@ -283,9 +303,13 @@ app.post("/verify", function (req, res) {
         }
         //If user is found with code...
         else {
-            foundUser.status = "Active";            //Active account
             console.log("user found");
-            foundUser.save(function (err, result) {     //Save updates to User database
+
+            //Activate account
+            foundUser.status = "Active";
+
+            //Save updates to User database
+            foundUser.save(function (err, result) {
                 if (err) {
                     cosole.log(err);
                 }
@@ -293,24 +317,25 @@ app.post("/verify", function (req, res) {
                     console.log(result);
                 }
             });
-            res.render("login")           //Renders login page so new user can sign in
+
+            //Renders login page so new user can sign in
+            res.render("login")
 
         }
 
-
     })
-
 
 })
 
+
 //Functionality for the Account Creation Page
 app.post("/signup", function (req, res) {
+    const emailHandle = "@vanderbilt.edu";
 
-    useremail = req.body.email                                         //Reads username and email
+    //Reads username and email
+    useremail = req.body.email
     //userpassword = bcrypt.hashSync(req.body.password, 8)
     userpassword = req.body.password
-
-    const emailHandle = "@vanderbilt.edu";
 
     //Creates a unique confirmation code for account verification
     const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -324,7 +349,9 @@ app.post("/signup", function (req, res) {
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'reusevandy@gmail.com',              //gmail account that will automatically send codes
+
+            //gmail account that will automatically send authentication codes
+            user: 'reusevandy@gmail.com',
             pass: 'ReuseVandy2021!'
         }
     });
@@ -362,24 +389,28 @@ app.post("/signup", function (req, res) {
 
         //Checks User Database if entered email is a valid Vanderbilt address and is not already taken.
         if (/*foundUser == null && */useremail.endsWith(emailHandle)) {
-            User.insertMany(user, function (err) {          //Saves new user to database
+
+            //Saves new user to database
+            User.insertMany(user, function (err) {
                 if (err) {
                     console.log(err)
                 }
                 else {
                     console.log("successfully saved user")
 
-                    res.redirect("/verify")                 //redirects new user to the verification page
+                    //redirects new user to the verification page
+                    res.redirect("/verify")
                 }
             });
         }
         else {
-            res.redirect("/failure");               //Invalid emails and taken users get redirected to failure page
+
+            //Invalid emails and taken users get redirected to failure page
+            res.redirect("/failure");
         }
     })
-
-
 })
+
 
 //Functionality of Login Page
 app.post("/login", function (req, res) {
@@ -395,9 +426,6 @@ app.post("/login", function (req, res) {
 
 
     //Checks User database to ensure email and password are correct
-
-
-
     User.findOne({ email: useremail, password: userpassword, status: "Active" }, function (err, foundUser) {
         if (err) {
             console.log(err);
@@ -433,13 +461,15 @@ app.post("/login", function (req, res) {
         // }
 
         console.log("user found");
-        res.redirect("/home")               //Renders Home Page after successful login
-    })
 
+        //Renders Home Page after successful login
+        res.redirect("/home")
+    })
 
 })
 
 
+//Local Port for development
 app.listen(3000, function () {
     console.log("App is listening on port 3000");
 })
