@@ -5,6 +5,26 @@
     <div class="jumbotron text-center">
         <h1>Results</h1>
     </div>
-    <%= posts %>
+
+    <% posts.forEach(function (post) { %>  
+            
+        <div class="card mb-3">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">
+                <%=post.title%>
+              </h5>
+              <p class="card-text">
+                <%=post.desc%>
+              </p>
+              <p class="card-text">
+                  <small class="text-muted">
+                    Price: $<%=post.price%>
+                </small>
+            </p>
+            </div>
+          </div>
+
+    <% }) %>
     
 </body>

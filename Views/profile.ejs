@@ -3,7 +3,6 @@
 <%- include('../partials/header') %>
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
 
-
 <h1 style="text-align:center">My Profile</h1>
 
 <br>
@@ -63,21 +62,35 @@
     </div>
 </div>
 <br>
-<div class="row">
-    <%= myPosts %>
 
 
-</div>
+
+    <% myPosts.forEach(function (myPost) { %>
+                
+                <% myPost.posts.forEach(function(post){%>
+                    
+                    <div class="card mb-3">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h5 class="card-title">
+                            <%=post.title%>
+                          </h5>
+                          <p class="card-text">
+                            <%=post.desc%>
+                          </p>
+                          <p class="card-text">
+                            <small class="text-muted">
+                              Price: $<%=post.price%>
+                          </small>
+                        </div>
+                      </div>
 
 
-<div id="footer">
+            <% }) %>
+    <% }) %>
 
-    <div class="btns">
-        <button class="btn btn-primary">Save Profile</button>
-        <button type="button" class="btn btn-secondary">Cancel</button>
-        <butto type="button" class="btn btn-danger" n="">Delete Profile</butto>
-    </div>
 
-</div>
+
+
 </body>
 </html>

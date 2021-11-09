@@ -36,7 +36,7 @@
             margin:0;
             padding:0;
             cursor: pointer;
-            color: gray;
+            color: #E7BC51;
         }
 
         ul {
@@ -51,30 +51,37 @@
         }
 
         h1 {text-align: center;}
+        .navbar{
+        background-color: #000000 !important;
+        }
     </style>
 
-    <nav class="navbar navbar-inverse">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container-fluid">
-            <img src="/image/logo.png" height="200" width="200">
-            <ul class="nav navbar-nav">
-                <form action="/home" method="GET">
-                    <li><button class="astext" type="submit">Home</button></li>
-                </form>
-                <form action="/buy" method="GET">
-                    <li><button class="astext" >Buy</button></li>
-                </form>
-                <form action="/sell" method="GET">
-                    <li><button class="astext" type="submit">Sell</button></li>
-                </form>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <form action="/profile" method="GET">
-                    <li><button class="astext" type="submit"><span class="glyphicon glyphicon-log-in"></span> Profile</button></li>
-                </form>
-                <form action="/logout" method="GET">
-                    <li><button class="astext" type="submit"><span class="glyphicon glyphicon-log-in"></span> Logout</button></li>
-                </form>
-            </ul>
+            
+            <img src="/image/logo.png" height="100" width="100">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+
+                <ul class="navbar-nav ms-auto">
+                    <form action="/home" method="GET">
+                        <li><button class="astext" type="submit">Home</button></li>
+                    </form>
+                    <form action="/buy" method="GET">
+                        <li><button class="astext" >Buy</button></li>
+                    </form>
+                    <form action="/sell" method="GET">
+                        <li><button class="astext" type="submit">Sell</button></li>
+                    </form>
+                    <form action="/profile" method="GET">
+                        <li><button class="astext" type="submit"><span class="glyphicon glyphicon-log-in"></span> Profile</button></li>
+                    </form>
+                    <form action="/logout" method="GET">
+                        <li><button class="astext" type="submit"><span class="glyphicon glyphicon-log-in"></span> Logout</button></li>
+                    </form>
+
+                </ul>
+            </div>
         </div>
     </nav>
 </head>

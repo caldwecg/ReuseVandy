@@ -2,20 +2,47 @@
 <html lang = "en">
 <%- include('../partials/header') %>
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
-    <form action="/search" method="GET">
-        <div class="input-group">
-            <div class="form-outline">
-            <input name="keywords" type="search" id="form1" class="form-control" />
-            <label class="form-label" for="form1">Search</label>
-            </div>
-            <button type="submit" class="btn btn-primary">
-            <i class="fas fa-search"></i>
-            </button>
-        </div>
-    </form>
+
     <div class="jumbotron text-center">
         <h1>Browse Listings</h1>
     </div>
-    <%= posts %>
+
+    <form action="/search" method="GET">
+        <div class="container">
+            <div class="row height d-flex justify-content-center align-items-center">
+                <div class="col-md-6">
+                    <div class="form input-group-append"> 
+                        <input type="text" class="form-control form-input" placeholder="Search anything..."> 
+
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <br>
+
+    <% posts.forEach(function (post) { %>  
+            
+            <div class="card mb-3">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <%=post.title%>
+                  </h5>
+                  <p class="card-text">
+                    <%=post.desc%>
+                  </p>
+                  <p class="card-text">
+                    <small class="text-muted">
+                      Price: $<%=post.price%>
+                  </small>
+              </div>
+
+    <% }) %>
+
+
     
 </body>
