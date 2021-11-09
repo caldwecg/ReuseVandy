@@ -152,18 +152,18 @@ app.get("/signup", function (req, res) {
 app.get("/profile", function (req, res) {
     sess = req.session
 
-    if(sess.email && sess.password){
-        User.find({email: sess.email}, function (err, foundUser) {
+    if (sess.email && sess.password) {
+        User.find({ email: sess.email }, function (err, foundUser) {
             if (!foundUser) {
                 return res.status(404).send({ message: "No User posts found." });
             }
             else {
                 console.log("User posts found");
-            
+
             }
             const posts = foundUser.posts;
             console.log(posts);
-            return res.render("profile", {myPosts: foundUser});
+            return res.render("profile", { myPosts: foundUser });
 
         })
     }
@@ -174,7 +174,7 @@ app.get("/profile", function (req, res) {
 
 
 //Helper Function to sort listings by date
-function sortByProperty(property) {
+function sortByDate(property) {
     return function (a, b) {
         if ((a[property] - b[property]) < 0)
             return 1;
@@ -199,7 +199,7 @@ app.get("/buy", function (req, res) {
                 console.log("posts found");
 
                 //sorts foundPosts by date
-                foundPosts.sort(sortByProperty("date"));
+                foundPosts.sort(sortByDate("date"));
                 //console.log(foundPosts)
             }
             return res.render("buy", { posts: foundPosts });
@@ -216,7 +216,13 @@ app.get("/buy", function (req, res) {
 app.get("/search", function (req, res) {
 
     //Parses search bar for the keywords entered by user
-    const keywords = req.query.keywords.replace(/ +/g, " ").split(" ")
+    keywords = req.query.keywords.replace(/ +/g, " ").split(" ")
+
+    //Forces all keywords to be lowercase for search purposes
+    for (var i = 0; i < keywords.length; ++i) {
+        keywords[i] = keywords[i].toLowerCase();
+    }
+
     console.log(keywords)
     regex = keywords.join("|");
     console.log(regex)
@@ -233,7 +239,7 @@ app.get("/search", function (req, res) {
                 console.log(foundPosts);
 
                 //sorts foundPosts by date
-                foundPosts.sort(sortByProperty("date"));
+                foundPosts.sort(sortByDate("date"));
             }
             return res.render("search", { posts: foundPosts });
 
@@ -256,7 +262,7 @@ app.post("/buy", function (req, res) {
 //Functionality for listing creation
 app.post("/sell", function (req, res) {
     sess = req.session
-    
+
 
     //Reads listing information from the form
     title = req.body.title;
@@ -264,8 +270,16 @@ app.post("/sell", function (req, res) {
     price = req.body.price;
     phone = req.body.phone;
     img = req.body.file;
-    const tags = req.body.title.replace(/ +/g, " ").split(" ")
 
+    //Creates tags for listing based on Title and Description
+    const titleTags = req.body.title.replace(/ +/g, " ").split(" ")
+    const descriptionTags = req.body.description.replace(/ +/g, " ").split(" ")
+    tags = titleTags.concat(descriptionTags)
+
+    //Forces all tags to be lowercase for search purposes
+    for (var i = 0; i < tags.length; ++i) {
+        tags[i] = tags[i].toLowerCase();
+    }
 
     //Saves the current date and time of listing creation
     var currentDate = new Date();

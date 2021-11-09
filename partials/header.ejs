@@ -1,87 +1,95 @@
-<head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
-    <title>Reuse, Vandy!</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- Start Top Header Bar -->
+<section class="top-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-xs-12 col-sm-4">
+                <div class="contact-number">
+                    <img src="/image/newlogo.png" height="80px" width="80px">
+                </div>
+            </div>
+            <div class="col-md-4 col-xs-12 col-sm-4">
+                <!-- Site Logo -->
+                <div class="logo text-center">
+                    <a href="index.html">
+                        <h1>Reuse, Vandy!</h1>
 
-    <style>
-        #footer {
-            position:fixed;
-            bottom:0;
-            width:100%;
-            height:80px;   /* Height of the footer */
-            background:black;
-        }
-        
-        nav {
-            background:black;
-        }
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4 col-xs-12 col-sm-4">
+                <!-- Cart -->
+                <ul class="top-menu text-right list-inline">
+                    <li class="dropdown cart-nav dropdown-slide">
+                        <a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">My Profile</a>
 
-        .btns {
-            margin: 0;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            -ms-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
-        }
-        .astext {
-            background:none;
-            border:none;
-            margin:0;
-            padding:0;
-            cursor: pointer;
-            color: #E7BC51;
-        }
 
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            display: inline;
-        }
+                    </li><!-- / Cart -->
 
-        li {
-            display:inline;
-        }
+                    <!-- Search -->
+                    <li class="dropdown search dropdown-slide">
+                        <a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">Log Out</a>
 
-        h1 {text-align: center;}
-        .navbar{
-        background-color: #000000 !important;
-        }
-    </style>
+                    </li><!-- / Search -->
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <div class="container-fluid">
-            
-            <img src="/image/logo.png" height="100" width="100">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <!-- Languages -->
+                    <!-- / Languages -->
 
-                <ul class="navbar-nav ms-auto">
-                    <form action="/home" method="GET">
-                        <li><button class="astext" type="submit">Home</button></li>
-                    </form>
-                    <form action="/buy" method="GET">
-                        <li><button class="astext" >Buy</button></li>
-                    </form>
-                    <form action="/sell" method="GET">
-                        <li><button class="astext" type="submit">Sell</button></li>
-                    </form>
-                    <form action="/profile" method="GET">
-                        <li><button class="astext" type="submit"><span class="glyphicon glyphicon-log-in"></span> Profile</button></li>
-                    </form>
-                    <form action="/logout" method="GET">
-                        <li><button class="astext" type="submit"><span class="glyphicon glyphicon-log-in"></span> Logout</button></li>
-                    </form>
-
-                </ul>
+                </ul><!-- / .nav .navbar-nav .navbar-right -->
             </div>
         </div>
+    </div>
+</section><!-- End Top Header Bar -->
+
+<!-- Main Menu Section -->
+<section class="menu">
+    <nav class="navbar navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <h2 class="menu-title">Main Menu</h2>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+            </div><!-- / .navbar-header -->
+
+            <!-- Navbar Links -->
+            <div id="navbar" class="navbar-collapse collapse text-center">
+                <ul class="nav navbar-nav">
+
+                    <!-- Home -->
+                    <li class="dropdown ">
+                        <a href="/home">Home</a>
+                    </li><!-- / Home -->
+
+
+                    <!-- Elements -->
+                    <li class="dropdown dropdown-slide">
+                        <a href="/buy" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350" role="button" aria-haspopup="true" aria-expanded="false">Buy</a>
+                        <!-- / .dropdown-menu -->
+                    </li><!-- / Elements -->
+
+
+                    <!-- Pages -->
+                    <li class="dropdown full-width dropdown-slide">
+                        <a href="/sell" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350" role="button" aria-haspopup="true" aria-expanded="false">Sell</a>
+                        <!-- / .dropdown-menu -->
+                    </li><!-- / Pages -->
+
+
+
+                    <!-- Blog -->
+                    <!-- / Blog -->
+
+                    <!-- Shop -->
+                    <!-- / Blog -->
+                </ul><!-- / .nav .navbar-nav -->
+
+            </div>
+            <!--/.navbar-collapse -->
+        </div><!-- / .container -->
     </nav>
-</head>
+</section>
