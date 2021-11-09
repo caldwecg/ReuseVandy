@@ -146,7 +146,19 @@ app.get("/signup", function (req, res) {
 app.get("/profile", function (req, res) {
     sess = req.session
     if(sess.email && sess.password){
-        return res.render("profile");
+        User.find({email: sess.email}, function (err, foundUser) {
+            if (!foundUser) {
+                return res.status(404).send({ message: "No User posts found." });
+            }
+            else {
+                console.log("User posts found");
+            
+            }
+            const posts = foundUser.posts;
+            console.log(posts);
+            return res.render("profile", {myPosts: foundUser});
+
+        })
     }
     else{
         res.render("login")
@@ -210,6 +222,10 @@ app.post("/buy", function (req, res) {
 
 
 app.post("/sell", function (req, res) {
+    sess = req.session
+    
+
+
     title = req.body.title;
     desc = req.body.description;
     price = req.body.price;
@@ -217,11 +233,6 @@ app.post("/sell", function (req, res) {
     img = req.body.file;
     const tags = req.body.title.replace(/ +/g, " ").split(" ")
 
-    console.log(title)
-    console.log(desc)
-    console.log(price)
-    console.log(phone)
-    console.log(tags)
 
     const post = new Post({
         title: title,
@@ -230,6 +241,28 @@ app.post("/sell", function (req, res) {
         phone: phone,
         tags: tags
     });
+
+    User.findOne({ email: sess.email }, function (err, foundUser) {
+
+        if (!foundUser) {
+            console.log("User not found");
+            return res.status(404).send({ message: "User Not found." });
+        }
+        else {
+            foundUser.posts.push(post);
+            foundUser.save(function (err, result) {     //Save updates to User database
+                if (err) {
+                    cosole.log(err);
+                }
+                else {
+                    console.log(result);
+                }
+            })
+        }
+    })
+
+
+
 
     Post.insertMany(post, function (err) {
         if (err) {
