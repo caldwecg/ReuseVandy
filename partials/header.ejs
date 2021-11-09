@@ -56,15 +56,16 @@
                 <!-- Cart -->
                 <ul class="top-menu text-right list-inline">
                     <li class="dropdown cart-nav dropdown-slide">
-                        <a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">My Profile</a>
-
-
+                        <form action = "/profile" method = "GET">
+                            <a href="/profile" class="btn btn-main btn-large">My Profile</a>
+                        </form>
                     </li><!-- / Cart -->
 
                     <!-- Search -->
                     <li class="dropdown search dropdown-slide">
-                        <a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">Log Out</a>
-
+                        <form action = "/login" method = "GET">
+                            <a href="/login" class="btn btn-main btn-large">Log Out</a>
+                        </form>
                     </li><!-- / Search -->
 
                     <!-- Languages -->
@@ -97,21 +98,25 @@
 
                     <!-- Home -->
                     <li class="dropdown ">
-                        <a href="/home">Home</a>
+                        <form action = "/home" method = "GET">
+                            <a href="/home" class="btn btn-main btn-large">Home</a>
+                        </form>
                     </li><!-- / Home -->
 
 
                     <!-- Elements -->
                     <li class="dropdown dropdown-slide">
-                        <a href="/buy" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350" role="button" aria-haspopup="true" aria-expanded="false">Buy</a>
-                        <!-- / .dropdown-menu -->
+                        <form action = "/buy" method = "GET">
+                            <a href="/buy" class="btn btn-main btn-large">Buy</a>
+                        </form>
                     </li><!-- / Elements -->
 
 
                     <!-- Pages -->
                     <li class="dropdown full-width dropdown-slide">
-                        <a href="/sell" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350" role="button" aria-haspopup="true" aria-expanded="false">Sell</a>
-                        <!-- / .dropdown-menu -->
+                        <form action = "/sell" method = "GET">
+                            <a href="/sell" class="btn btn-main btn-large">Sell</a>
+                        </form>
                     </li><!-- / Pages -->
 
 
