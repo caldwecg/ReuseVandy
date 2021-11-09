@@ -21,8 +21,9 @@
         <div class="container">
             <div class="row">
                 <!-- Contact Form -->
+                <form id="contact-form" method="POST" action="/sell" role="form">
                 <div class="contact-form col-md-6 ">
-                    <form id="contact-form" method="post" action="" role="form">
+                    
                     
                         <div class="form-group">
                             <input type="text" placeholder="Listing Name" class="form-control" name="name" id="name">
@@ -37,7 +38,6 @@
                         </div>
                                         
                         
-                    </form>
                 </div>
                 <!-- ./End Contact Form -->
                 
@@ -45,7 +45,6 @@
                 <div class="contact-details col-md-6 ">
                     <div>
                         <h4 class="widget-title">Category</h4>
-                        <form method="post" action="#">
                             <select class="form-control">
                                 <option>Appliances</option>
                                 <option>Clothing</option>
@@ -56,11 +55,9 @@
                                 <option>Lost Items</option>
                                 <option>Other</option>
                             </select>
-                        </form>
                     </div>
                     <div>
                         <h4 class="widget-title">Condition</h4>
-                        <form method="post" action="#">
                             <select class="form-control">
                                 <option>New</option>
                                 <option>Like New</option>
@@ -68,25 +65,27 @@
                                 <option>Used</option>
                                 <option>Worn</option>
                             </select>
-                        </form>
                     </div>
                 </div>
+            
+                <div class="container">
+                    <div class="row">
+                        <div class="contact-form col-md-6 ">
+                            <a href="#!" class="btn btn-main btn-medium btn-round-full">Upload Images</a>
+                        </div>
+                        <div class="contact-form col-md-6 ">
+                            <button href="#!" class="btn btn-main btn-medium btn-round-full" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
                 <!-- / End Contact Details -->
                     
                 
             
             </div> <!-- end row -->
         </div> <!-- end container -->
-        <div class="container">
-            <div class="row">
-                <div class="contact-form col-md-6 ">
-                    <a href="#!" class="btn btn-main btn-medium btn-round-full">Upload Images</a>
-                </div>
-                <div class="contact-form col-md-6 ">
-                    <a href="#!" class="btn btn-main btn-medium btn-round-full">Submit</a>
-                </div>
-            </div>
-        </div>
+        
     </div>
 </section>
 <footer class="footer section text-center">
