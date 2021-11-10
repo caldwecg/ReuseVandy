@@ -440,7 +440,7 @@ app.post("/signup", function (req, res) {
     User.findOne({ email: useremail }, function (err, foundUser) {
 
         //Checks User Database if entered email is a valid Vanderbilt address and is not already taken.
-        if (/*foundUser == null && */useremail.endsWith(emailHandle)) {
+        if (foundUser == null && useremail.endsWith(emailHandle)) {
 
             //Saves new user to database
             User.insertMany(user, function (err) {
