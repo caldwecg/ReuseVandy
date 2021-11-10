@@ -381,9 +381,9 @@ app.post("/signup", function (req, res) {
 
     //Reads user email and password
     useremail = req.body.email
-    plaintTextUserPassword = req.body.password
+    plainTextUserPassword = req.body.password
     console.log(useremail)
-    console.log(plaintTextUserPassword)
+    console.log(plainTextUserPassword)
     console.log(req.body.password2)
 
     //Checks if email is already taken
@@ -405,7 +405,7 @@ app.post("/signup", function (req, res) {
     }
 
     //Checks Password meets Certain Strength Requirements
-    if (plaintTextUserPassword.length <= 8 || plaintTextUserPassword.length >= 25 || !(hasNumber(plaintTextUserPassword)) || !(symbols.test(plaintTextUserPassword))) {
+    if (plainTextUserPassword.length <= 8 || plainTextUserPassword.length >= 25 || !(hasNumber(plainTextUserPassword)) || !(symbols.test(plainTextUserPassword))) {
         console.error("Password does not meet Strength requirements");
     }
 
@@ -455,7 +455,7 @@ app.post("/signup", function (req, res) {
     });
 
     //User Password gets hashed for security purposes
-    bcrypt.hash(plaintTextUserPassword, saltRounds, function (err, hash) {
+    bcrypt.hash(plainTextUserPassword, saltRounds, function (err, hash) {
         if (err) {
             console.error(err)
         } else {
