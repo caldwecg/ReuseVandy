@@ -81,7 +81,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 //Client requests root page. If the user is logged in to a session, user is directed to home page.
 //Otherwise, user is directed to login page.
-app.get("/", function (req, res) {
+
+function defaultHandler (req, res) {
     sess = req.session
     if (sess.email) {
         return res.render("home");
@@ -89,12 +90,14 @@ app.get("/", function (req, res) {
     else {
         res.render("login", { alerts: [0, 0] });
     }
+}
 
-})
+app.get("/", defaultHandler)
 
 
 //Client Request to end their session; redirects to the login page after session destruction.
-app.get("/logout", function (req, res) {
+
+function logoutHandler (req, res) {
     req.session.destroy((err) => {
         if (err) {
             console.log(err);
@@ -102,11 +105,12 @@ app.get("/logout", function (req, res) {
         }
         res.redirect('/');
     });
-});
+}
+app.get("/logout", logoutHandler);
 
 
 //Client request to view sell page. Only renders if user is logged in, otherwise redirects to login page
-app.get("/sell", function (req, res) {
+function sellHandler (req, res) {
     sess = req.session;
     if (sess.email) {
         return res.render("sell");
@@ -114,17 +118,19 @@ app.get("/sell", function (req, res) {
     else {
         res.render("login", { alerts: [0, 0] });
     }
-})
+}
+app.get("/sell", sellHandler)
 
 
 //Renders verification page (following an account creation)
-app.get("/verify", function (req, res) {
+function verifyHandler(req, res) {
     res.render("verify", { alerts: [0, 0, 0] });
-})
+}
+app.get("/verify", verifyHandler)
 
 
 //Renders home page. Only renders if user is logged in, otherwise redirects to login page
-app.get("/home", function (req, res) {
+function homeHandler(req, res) {
     sess = req.session
     if (sess.email) {
         return res.render("home");
@@ -132,24 +138,27 @@ app.get("/home", function (req, res) {
     else {
         res.render("login", { alerts: [0, 0] });
     }
-})
+}
+app.get("/home", homeHandler)
 
 
 //Renders a failure page if invalid emails are given during account creation
-app.get("/failure", function (req, res) {
+function failureHandler(req, res) {
     res.render("failure");
-})
+}
+app.get("/failure", failureHandler)
 
 
 //Renders signup page when Client 
-app.get("/signup", function (req, res) {
+function signupHandler(req, res) {
     console.log('request for signup recieved')
     res.render("signup", { alerts: [0, 0, 0] });
-})
+}
+app.get("/signup", signupHandler)
 
 
 //Renders user profile as long as there is a valid session. Otherwise, redirects to login page
-app.get("/profile", function (req, res) {
+function profileHandler(req, res) {
     sess = req.session
 
     if (sess.email) {
@@ -170,13 +179,14 @@ app.get("/profile", function (req, res) {
     else {
         res.render("login")
     }
-})
+}
+app.get("/profile", profileHandler)
 
 
 
 //Client request for Buy page is handled here. Renders the Buy Page with
 //recent item listings; most recently created listings appearing at the top
-app.get("/buy", function (req, res) {
+function buyHandler(req, res) {
     sess = req.session
     if (sess.email) {
         Post.find({}, function (err, foundPosts) {
@@ -197,11 +207,12 @@ app.get("/buy", function (req, res) {
     else {
         res.render("login")
     }
-})
+}
+app.get("/buy", buyHandler)
 
 
 //Handling of a client item search
-app.get("/search", function (req, res) {
+function searchHandler(req, res) {
 
     //Parses search bar for the keywords entered by user
     keywords = req.query.keywords.replace(/ +/g, " ").split(" ")
@@ -236,7 +247,8 @@ app.get("/search", function (req, res) {
     else {
         res.render("login")
     }
-})
+}
+app.get("/search", searchHandler)
 
 
 //Server Response to a search on the Buy Page. Keywords are passed in the URL to be processed
@@ -593,3 +605,8 @@ function sortByDate(property) {
 app.listen(3000, function () {
     console.log("App is listening on port 3000");
 })
+
+exports.defaultHandler = defaultHandler;
+exports.hasNumber = hasNumber;
+exports.sortByDate = sortByDate;
+exports.logoutHandler = logoutHandler;
