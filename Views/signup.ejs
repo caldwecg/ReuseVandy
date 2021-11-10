@@ -57,7 +57,9 @@
   </body>
 </html> -->
 
-<html lang="en"><head>
+<html lang="en">
+
+<head>
 
   <!-- Basic Page Needs
   ================================================== -->
@@ -71,118 +73,124 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <meta name="author" content="Themefisher">
   <meta name="generator" content="Themefisher Constra HTML Template v1.0">
-  
+
   <!-- Favicon -->
   <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png">
-  
+
   <!-- Themefisher Icon font -->
   <link rel="stylesheet" href="plugins/themefisher-font/style.css">
   <!-- bootstrap.min css -->
   <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
-  
+
   <!-- Animate css -->
   <link rel="stylesheet" href="plugins/animate/animate.css">
   <!-- Slick Carousel -->
   <link rel="stylesheet" href="plugins/slick/slick.css">
   <link rel="stylesheet" href="plugins/slick/slick-theme.css">
-  
+
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
 
-<script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/46/12a/common.js"></script><script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/46/12a/util.js"></script></head>
+  <script type="text/javascript" charset="UTF-8"
+    src="https://maps.googleapis.com/maps-api-v3/api/js/46/12a/common.js"></script>
+  <script type="text/javascript" charset="UTF-8"
+    src="https://maps.googleapis.com/maps-api-v3/api/js/46/12a/util.js"></script>
+</head>
 
 <body id="body">
   <section class="top-header">
     <div class="container">
-        <div class="row">
-            <div class="col-md-4 col-xs-12 col-sm-4">
-                <div class="contact-number">
-                    <img src="/image/newlogo.png" height="80px" width="80px">
-                </div>
-            </div>
-            <div class="col-md-4 col-xs-12 col-sm-4">
-                <!-- Site Logo -->
-                <div class="logo text-center">
-                    <a href="index.html">
-                        <h1>Reuse, Vandy!</h1>
-
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-4 col-xs-12 col-sm-4">
-                <!-- Cart -->
-                <ul class="top-menu text-right list-inline">
-
-                    <!-- Languages -->
-                    <!-- / Languages -->
-
-                </ul><!-- / .nav .navbar-nav .navbar-right -->
-            </div>
+      <div class="row">
+        <div class="col-md-4 col-xs-12 col-sm-4">
+          <div class="contact-number">
+            <img src="/image/newlogo.png" height="80px" width="80px">
+          </div>
         </div>
-    </div>
-</section><!-- End Top Header Bar -->
-<section class="signin-page account">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3">
-        <div class="block text-center">
-          <a class="logo" href="index.html">
-            <img src="images/logo.png" alt="">
-          </a>
-          <h2 class="text-center">Create An Account</h2>
-          <form class="text-left clearfix" action="/signup" method="POST">
-            <div class="form-group">
-              <input name="email" type="email" class="form-control" placeholder="Vanderbilt Email:">
-            </div>
-            <div class="form-group">
-              <input type="password" class="form-control" placeholder="Password">
-            </div>
-            <div class="form-group">
-              <input name="password" type="password" class="form-control" placeholder="Retype Password">
-            </div>
-            <div class="text-center">
-              <button type="submit" class="btn btn-main text-center">Send Verification Code!</button>
-            </div>
-          </form>
-          <form action="/login" method="GET">
-            <button class="btn btn-small text-center" type="submit">Already have an account?</button>
-          </form>
-          <p><a href="forget-password.html"> Forgot your password?</a></p>
+        <div class="col-md-4 col-xs-12 col-sm-4">
+          <!-- Site Logo -->
+          <div class="logo text-center">
+            <a href="index.html">
+              <h1>Reuse, Vandy!</h1>
+
+            </a>
+          </div>
+        </div>
+        <div class="col-md-4 col-xs-12 col-sm-4">
+          <!-- Cart -->
+          <ul class="top-menu text-right list-inline">
+
+            <!-- Languages -->
+            <!-- / Languages -->
+
+          </ul><!-- / .nav .navbar-nav .navbar-right -->
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section><!-- End Top Header Bar -->
+  <section class="signin-page account">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <div class="block text-center">
+            <a class="logo" href="index.html">
+              <img src="images/logo.png" alt="">
+            </a>
+            <h2 class="text-center">Create An Account</h2>
+            <form class="text-left clearfix" action="/signup" method="POST">
+              <div class="form-group">
+                <input type="email" name="email" class="form-control" placeholder="Vanderbilt Email:">
+              </div>
+              <div class="form-group">
+                <input type="password" name="password" class=" form-control" placeholder="Password">
+              </div>
+              <div class="form-group">
+                <input type="password" name="password2" class=" form-control" placeholder="Retype Password">
+              </div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-main text-center">Send Verification Code!</button>
+              </div>
+            </form>
+            <form action="/login" method="GET">
+              <button class="btn btn-small text-center" type="submit">Already have an account?</button>
+            </form>
+            <p><a href="forget-password.html"> Forgot your password?</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- 
+  <!-- 
     Essential Scripts
     =====================================-->
-    
-    <!-- Main jQuery -->
-    <script src="plugins/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap 3.1 -->
-    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
-    <!-- Bootstrap Touchpin -->
-    <script src="plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
-    <!-- Instagram Feed Js -->
-    <script src="plugins/instafeed/instafeed.min.js"></script>
-    <!-- Video Lightbox Plugin -->
-    <script src="plugins/ekko-lightbox/dist/ekko-lightbox.min.js"></script>
-    <!-- Count Down Js -->
-    <script src="plugins/syo-timer/build/jquery.syotimer.min.js"></script>
 
-    <!-- slick Carousel -->
-    <script src="plugins/slick/slick.min.js"></script>
-    <script src="plugins/slick/slick-animation.min.js"></script>
+  <!-- Main jQuery -->
+  <script src="plugins/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap 3.1 -->
+  <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+  <!-- Bootstrap Touchpin -->
+  <script src="plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
+  <!-- Instagram Feed Js -->
+  <script src="plugins/instafeed/instafeed.min.js"></script>
+  <!-- Video Lightbox Plugin -->
+  <script src="plugins/ekko-lightbox/dist/ekko-lightbox.min.js"></script>
+  <!-- Count Down Js -->
+  <script src="plugins/syo-timer/build/jquery.syotimer.min.js"></script>
 
-    <!-- Google Mapl -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
-    <script type="text/javascript" src="plugins/google-map/gmap.js"></script>
+  <!-- slick Carousel -->
+  <script src="plugins/slick/slick.min.js"></script>
+  <script src="plugins/slick/slick-animation.min.js"></script>
 
-    <!-- Main Js File -->
-    <script src="js/script.js"></script>
-    
+  <!-- Google Mapl -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
+  <script type="text/javascript" src="plugins/google-map/gmap.js"></script>
+
+  <!-- Main Js File -->
+  <script src="js/script.js"></script>
 
 
-  
-  </body></html>
+
+
+</body>
+
+</html>
