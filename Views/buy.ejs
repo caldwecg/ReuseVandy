@@ -19,8 +19,8 @@
     <div class="container">
         <div class="row height d-flex justify-content-center align-items-center">
             <div class="col-md-6">
-                <div class="form input-group-append"> 
-                    <input name="keywords" type="text" class="form-control form-input" placeholder="Search anything..."> 
+                <div class="form input-group-append">
+                    <input name="keywords" type="text" class="form-control form-input" placeholder="Search anything...">
 
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-search"></i>
@@ -52,12 +52,14 @@
                         <div class="panel panel-default">
                             <div class="panel-heading" role="tab" id="headingOne">
                                 <h4 class="panel-title">
-                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                                        aria-expanded="true" aria-controls="collapseOne">
                                         Shoes
                                     </a>
                                 </h4>
                             </div>
-                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+                                aria-labelledby="headingOne">
                                 <div class="panel-body">
                                     <ul>
                                         <li><a href="#!">Brand &amp; Twist</a></li>
@@ -70,12 +72,14 @@
                         <div class="panel panel-default">
                             <div class="panel-heading" role="tab" id="headingTwo">
                                 <h4 class="panel-title">
-                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                                        href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                         Duty Wear
                                     </a>
                                 </h4>
                             </div>
-                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
+                                aria-labelledby="headingTwo">
                                 <div class="panel-body">
                                     <ul>
                                         <li><a href="#!">Brand &amp; Twist</a></li>
@@ -88,12 +92,14 @@
                         <div class="panel panel-default">
                             <div class="panel-heading" role="tab" id="headingThree">
                                 <h4 class="panel-title">
-                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                                        href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                         WorkOut Shoes
                                     </a>
                                 </h4>
                             </div>
-                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
+                                aria-labelledby="headingThree">
                                 <div class="panel-body">
                                     <ul>
                                         <li><a href="#!">Brand &amp; Twist</a></li>
@@ -112,67 +118,71 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="product-item">
-                            <% posts.forEach(function (post) { %>  
-                                <div class="card mb-3">
-                                    <img src="..." class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                      <h5 class="card-title">
+                            <% posts.forEach(function (post) { %>
+                            <div class="card mb-3">
+                                <img src="..." class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">
                                         <%=post.title%>
-                                      </h5>
-                                      <p class="card-text">
+                                    </h5>
+                                    <p class="card-text">
                                         <%=post.desc%>
-                                      </p>
-                                      <p class="card-text">
+                                    </p>
+                                    <p class="card-text">
                                         <small class="text-muted">
-                                          Price: $<%=post.price%>
-                                      </small>
-                                  </div>
+                                            Price: $<%=post.price%>
+                                        </small>
+                                </div>
 
-                            <% }) %>
+                                <% }) %>
 
+                            </div>
                         </div>
-                    </div>
-                    
-                   
-                    
-                    
 
-                    <!-- Modal -->
-                    <div class="modal product-modal fade" id="product-modal">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <i class="tf-ion-close"></i>
-                        </button>
-                        <div class="modal-dialog " role="document">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-md-8 col-sm-6 col-xs-12">
-                                            <div class="modal-image">
-                                                <img class="img-responsive" src="images/shop/products/modal-product.jpg" alt="product-img">
+
+
+
+
+                        <!-- Modal -->
+                        <div class="modal product-modal fade" id="product-modal">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <i class="tf-ion-close"></i>
+                            </button>
+                            <div class="modal-dialog " role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-8 col-sm-6 col-xs-12">
+                                                <div class="modal-image">
+                                                    <img class="img-responsive"
+                                                        src="images/shop/products/modal-product.jpg" alt="product-img">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-4 col-sm-6 col-xs-12">
-                                            <div class="product-short-details">
-                                                <h2 class="product-title">GM Pendant, Basalt Grey</h2>
-                                                <p class="product-price">$200</p>
-                                                <p class="product-short-description">
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem iusto nihil cum. Illo laborum numquam rem aut officia dicta cumque.
-                                                </p>
-                                                <a href="cart.html" class="btn btn-main">Add To Cart</a>
-                                                <a href="product-single.html" class="btn btn-transparent">View Product Details</a>
+                                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                                <div class="product-short-details">
+                                                    <h2 class="product-title">GM Pendant, Basalt Grey</h2>
+                                                    <p class="product-price">$200</p>
+                                                    <p class="product-short-description">
+                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem
+                                                        iusto nihil cum. Illo laborum numquam rem aut officia dicta
+                                                        cumque.
+                                                    </p>
+                                                    <a href="cart.html" class="btn btn-main">Add To Cart</a>
+                                                    <a href="product-single.html" class="btn btn-transparent">View
+                                                        Product Details</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div><!-- /.modal -->
+                        </div><!-- /.modal -->
 
+                    </div>
                 </div>
-            </div>
 
+            </div>
         </div>
-    </div>
 </section>
 
 
@@ -218,7 +228,8 @@
                         <a href="contact.html">PRIVACY POLICY</a>
                     </li>
                 </ul>
-                <p class="copyright-text">Copyright ©2021, Designed &amp; Developed by <a href="https://themefisher.com/">Themefisher</a></p>
+                <p class="copyright-text">Copyright ©2021, Designed &amp; Developed by <a
+                        href="https://themefisher.com/">Themefisher</a></p>
             </div>
         </div>
     </div>
@@ -254,4 +265,5 @@ Essential Scripts
 
 
 </body>
+
 </html>
