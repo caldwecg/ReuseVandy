@@ -1,96 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
-<%- include('../partials/header') %>
-<body data-spy="scroll" data-target=".navbar" data-offset="50">
-
-<h1 style="text-align:center">My Profile</h1>
-
-<br>
-<div class="row">
-    <div class="col-sm-12 mx-auto">
-    </div>
-    <div class="col-sm-8 offset-sm-2">
-        <form class="form-horizontal">
-
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label" for="first_name"> Username:</label>
-                <div class="col-sm-9">
-                    <input class="form-control" id="first_name" name="first_name" type="text" placeholder="First Name">
+<body>
+    <%- include('../partials/header') %>
+    <section class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="content">
+                        <h1 class="page-name">Dashboard</h1>
+                        <ol class="breadcrumb">
+                            <li><a href="index.html">Home</a></li>
+                            <li class="active">my account</li>
+                        </ol>
+                    </div>
                 </div>
             </div>
-
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label" for="primary_email">Email:</label>
-                <div class="col-sm-9">
-                    <input class="form-control" id="primary_email" name="primary_email" type="email" placeholder="Email Address">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label" >Password:</label>
-                <div class="col-sm-7">
-                    <input class="form-control" type="password" placeholder="Password">
-                </div>
-                <div class="col-sm-2"><button class="btn btn-primary">
-                    Change Password
-                </button>
-                </div>
-            </div>
-            <div class="offset-sm-3 col-sm-9">
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label" for="first_name"> Phone number:</label>
-                <div class="col-sm-7">
-                    <input class="form-control" name="first_name" type="text" placeholder="First Name">
-                </div>
-                <div class="col-sm-2"><button class="btn btn-primary">
-                    Change Phone #
-                </button>
-                </div>
-
-
-            </div>
-        </form>
-    </div>
-    <div class="col-sm-2"></div>
-</div>
-<br>
-<div class="row">
-    <div class="col-sm-12 mx-auto">
-    </div>
-    <div class="col-sm-8 offset-sm-2">
-        <h2>My listings:</h2>
-    </div>
-</div>
-<br>
-
-
-
-    <% myPosts.forEach(function (myPost) { %>
-                
-                <% myPost.posts.forEach(function(post){%>
-                    
-                    <div class="card mb-3">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <h5 class="card-title">
-                            <%=post.title%>
-                          </h5>
-                          <p class="card-text">
-                            <%=post.desc%>
-                          </p>
-                          <p class="card-text">
-                            <small class="text-muted">
-                              Price: $<%=post.price%>
-                          </small>
+        </div>
+    </section>
+    <section class="user-dashboard page-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="dashboard-wrapper dashboard-user-profile">
+                        <div class="media">
+                          <div class="media-body">
+                            <ul class="user-profile-list">
+                              <li><span>Full Name:</span>Clay Wright</li>
+                              <li><span>Email:</span>clayton.wright@vanderbilt.edu</li>
+                              <li><span>Phone:</span>3175227344</li>
+                              <li><span>Password:</span>password</li>
+                            </ul>
+                          </div>
                         </div>
                       </div>
-
-
-            <% }) %>
-    <% }) %>
-
-
-
-
+                    <div class="dashboard-wrapper user-dashboard">
+                        <div class="media">
+                            <div class="media-body">
+                                <p>Here you will find all listings you have created.</p>
+                            </div>
+                        </div>
+                        <div class="total-order mt-20">
+                            <h4>My Listings</h4>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Listing Title</th>
+                                            <th>Listing Date</th>
+                                            <th>Category</th>
+                                            <th>Asking Price</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><a href="#!">Futon</a></td>
+                                            <td>Mar 25, 2016</td>
+                                            <td>Furniture</td>
+                                            <td>$ 99.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="#!">TV</a></td>
+                                            <td>Mar 25, 2016</td>
+                                            <td>Electronics</td>
+                                            <td>$ 99.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="#!">T Shirt</a></td>
+                                            <td>Mar 25, 2016</td>
+                                            <td>Clothing</td>
+                                            <td>$ 99.00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
-</html>
