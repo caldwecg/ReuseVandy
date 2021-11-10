@@ -475,6 +475,7 @@ app.post("/signup", function (req, res) {
             console.error(err)
         } else {
 
+            //Checks User Database if entered email is a valid Vanderbilt address and is not already taken.
             //Creates a new user with specified email and password
             const user = new User({
                 email: useremail,
@@ -482,13 +483,16 @@ app.post("/signup", function (req, res) {
                 confirmationCode: code
             })
 
+
             //Saves new user to database
             User.insertMany(user, function (err) {
                 if (err) {
                     console.log(err)
                 } else {
                     console.log("successfully saved user")
-                    return res.redirect("/verify");
+
+                    //redirects new user to the verification page
+                    res.redirect("/verify")
                 }
             });
         }
