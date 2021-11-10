@@ -52,24 +52,20 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td><a href="#!">Futon</a></td>
-                                            <td>Mar 25, 2016</td>
-                                            <td>Furniture</td>
-                                            <td>$ 99.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="#!">TV</a></td>
-                                            <td>Mar 25, 2016</td>
-                                            <td>Electronics</td>
-                                            <td>$ 99.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="#!">T Shirt</a></td>
-                                            <td>Mar 25, 2016</td>
-                                            <td>Clothing</td>
-                                            <td>$ 99.00</td>
-                                        </tr>
+                                        <% myPosts.forEach(function (myPost) { %>
+                
+                                            <% myPost.posts.forEach(function(post){%>
+                                                
+                                                <tr>
+                                                    <td><%=post.title%></td>
+                                                    <td><%=post.date%></td>
+                                                    <td><%=post.desc%></td>
+                                                    <td><%=post.price%></td>
+                                                    <td>
+                                                </tr>
+                                                  
+                                            <% }) %>
+                                        <% }) %>
                                     </tbody>
                                 </table>
                             </div>
