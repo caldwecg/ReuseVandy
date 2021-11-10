@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="en">
+
+<head>
 
   <!-- Basic Page Needs
   ================================================== -->
@@ -31,99 +33,125 @@
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
 
-  <script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/46/12a/common.js"></script><script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/46/12a/util.js"></script><script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/46/12a/common.js"></script><script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/46/12a/util.js"></script><script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps/api/js/AuthenticationService.Authenticate?1shttp%3A%2F%2Flocalhost%3A3000%2F&amp;4sAIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw&amp;callback=_xdc_._6841&amp;key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw&amp;token=75531"></script></head>
+  <script type="text/javascript" charset="UTF-8"
+    src="https://maps.googleapis.com/maps-api-v3/api/js/46/12a/common.js"></script>
+  <script type="text/javascript" charset="UTF-8"
+    src="https://maps.googleapis.com/maps-api-v3/api/js/46/12a/util.js"></script>
+  <script type="text/javascript" charset="UTF-8"
+    src="https://maps.googleapis.com/maps-api-v3/api/js/46/12a/common.js"></script>
+  <script type="text/javascript" charset="UTF-8"
+    src="https://maps.googleapis.com/maps-api-v3/api/js/46/12a/util.js"></script>
+  <script type="text/javascript" charset="UTF-8"
+    src="https://maps.googleapis.com/maps/api/js/AuthenticationService.Authenticate?1shttp%3A%2F%2Flocalhost%3A3000%2F&amp;4sAIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw&amp;callback=_xdc_._6841&amp;key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw&amp;token=75531"></script>
+</head>
 
 <body id="body">
-<section class="top-header">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-4 col-xs-12 col-sm-4">
-        <div class="contact-number">
-          <img src="/image/newlogo.png" height="80px" width="80px">
+  <section class="top-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 col-xs-12 col-sm-4">
+          <div class="contact-number">
+            <img src="/image/newlogo.png" height="80px" width="80px">
+          </div>
         </div>
-      </div>
-      <div class="col-md-4 col-xs-12 col-sm-4">
-        <!-- Site Logo -->
-        <div class="logo text-center">
+        <div class="col-md-4 col-xs-12 col-sm-4">
+          <!-- Site Logo -->
+          <div class="logo text-center">
             <h1>Reuse, Vandy!</h1>
+          </div>
         </div>
-      </div>
-      <div class="col-md-4 col-xs-12 col-sm-4">
-        <!-- Cart -->
-        <ul class="top-menu text-right list-inline">
+        <div class="col-md-4 col-xs-12 col-sm-4">
+          <!-- Cart -->
+          <ul class="top-menu text-right list-inline">
 
-          <!-- Languages -->
-          <!-- / Languages -->
+            <!-- Languages -->
+            <!-- / Languages -->
 
-        </ul><!-- / .nav .navbar-nav .navbar-right -->
-      </div>
-    </div>
-  </div>
-</section><!-- End Top Header Bar -->
-
-
-
-
-
-
-<section class="signin-page account">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3">
-        <div class="block text-center">
-          <a class="logo" href="index.html">
-            <img src="images/logo.png" alt="">
-          </a>
-          <h2 class="text-center">Please Enter Confirmation Code Sent to Your Email. <br> Be Sure to Check Spam Folder!</h2>
-          <form action="/verify" class="text-left clearfix" method="POST">
-
-            <div class="form-group">
-              <input type="String" name="code" class="form-control" id="floatingInput" placeholder="ABCD1234">
-            </div>
-
-
-            <div class="text-center">
-              <button type="submit" class="btn btn-main text-center">Verify</button>
-            </div>
-          </form>
-          <p class="mt-20">
-          </p>
-          <p></p>
+          </ul><!-- / .nav .navbar-nav .navbar-right -->
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section><!-- End Top Header Bar -->
 
-<!--
+
+
+
+
+
+  <section class="signin-page account">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+
+          <% if (alerts[0] == 1) { %>
+          <div class="alert alert-danger alert-common" role="alert" id="incorrectCode"><i
+              class="tf-ion-close-circled"></i><span>Hmmm!</span> That code didn't match our records. Please try again
+          </div>
+          <% }%>
+
+          <% if (alerts[1] == 1) { %>
+          <div class="alert alert-danger alert-common" role="alert" id="pendingAccount"><i
+              class="tf-ion-close-circled"></i><span>Oops!</span> Account not activated. Please check your email and
+            verify the account.</div>
+          <% }%>
+
+          <div class="block text-center">
+            <a class="logo" href="index.html">
+              <img src="images/logo.png" alt="">
+            </a>
+            <h2 class="text-center">Please Enter Confirmation Code Sent to Your Email. <br> Be Sure to Check Spam
+              Folder!</h2>
+            <form action="/verify" class="text-left clearfix" method="POST">
+
+              <div class="form-group">
+                <input type="String" name="code" class="form-control" id="floatingInput" placeholder="ABCD1234">
+              </div>
+
+
+              <div class="text-center">
+                <button type="submit" class="btn btn-main text-center">Verify</button>
+              </div>
+            </form>
+            <p class="mt-20">
+            </p>
+            <p></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--
 Essential Scripts
 =====================================-->
 
-<!-- Main jQuery -->
-<script src="plugins/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.1 -->
-<script src="plugins/bootstrap/js/bootstrap.min.js"></script>
-<!-- Bootstrap Touchpin -->
-<script src="plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
-<!-- Instagram Feed Js -->
-<script src="plugins/instafeed/instafeed.min.js"></script>
-<!-- Video Lightbox Plugin -->
-<script src="plugins/ekko-lightbox/dist/ekko-lightbox.min.js"></script>
-<!-- Count Down Js -->
-<script src="plugins/syo-timer/build/jquery.syotimer.min.js"></script>
+  <!-- Main jQuery -->
+  <script src="plugins/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap 3.1 -->
+  <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+  <!-- Bootstrap Touchpin -->
+  <script src="plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
+  <!-- Instagram Feed Js -->
+  <script src="plugins/instafeed/instafeed.min.js"></script>
+  <!-- Video Lightbox Plugin -->
+  <script src="plugins/ekko-lightbox/dist/ekko-lightbox.min.js"></script>
+  <!-- Count Down Js -->
+  <script src="plugins/syo-timer/build/jquery.syotimer.min.js"></script>
 
-<!-- slick Carousel -->
-<script src="plugins/slick/slick.min.js"></script>
-<script src="plugins/slick/slick-animation.min.js"></script>
+  <!-- slick Carousel -->
+  <script src="plugins/slick/slick.min.js"></script>
+  <script src="plugins/slick/slick-animation.min.js"></script>
 
-<!-- Google Mapl -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
-<script type="text/javascript" src="plugins/google-map/gmap.js"></script>
+  <!-- Google Mapl -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
+  <script type="text/javascript" src="plugins/google-map/gmap.js"></script>
 
-<!-- Main Js File -->
-<script src="js/script.js"></script>
-
-
+  <!-- Main Js File -->
+  <script src="js/script.js"></script>
 
 
-</body></html>
+
+
+</body>
+
+</html>

@@ -87,7 +87,7 @@ app.get("/", function (req, res) {
         return res.render("home");
     }
     else {
-        res.render("login")
+        res.render("login", { alerts: [0, 0] });
     }
 
 })
@@ -111,14 +111,14 @@ app.get("/sell", function (req, res) {
         return res.render("sell");
     }
     else {
-        res.render("login")
+        res.render("login", { alerts: [0, 0] });
     }
 })
 
 
 //Renders verification page (following an account creation)
 app.get("/verify", function (req, res) {
-    res.render("verify");
+    res.render("verify", { alerts: [0, 0, 0] });
 })
 
 
@@ -129,7 +129,7 @@ app.get("/home", function (req, res) {
         return res.render("home");
     }
     else {
-        res.render("login")
+        res.render("login", { alerts: [0, 0] });
     }
 })
 
@@ -327,6 +327,8 @@ app.post("/sell", function (req, res) {
 //Functionality for the Verification Page.
 app.post("/verify", function (req, res) {
 
+    let alert = [0, 0]
+
     //verification code entered by user
     code = req.body.code;
     console.log(code);
@@ -338,7 +340,9 @@ app.post("/verify", function (req, res) {
         if (!foundUser) {
             console.log(code)
             console.log("User not found");
-            return res.status(404).send({ message: "User Not found." });
+
+            alert[0] = 1;
+            return res.render("verify", { alerts: alert });
         }
 
         //If user is found with code...
@@ -362,7 +366,7 @@ app.post("/verify", function (req, res) {
             });
 
             //Renders login page so new user can sign in
-            res.render("login")
+            res.render("login", { alerts: [0, 0] });
 
         }
 
@@ -505,6 +509,8 @@ app.post("/signup", function (req, res) {
 //Functionality of Login Page
 app.post("/login", function (req, res) {
 
+    let alert = [0, 0]
+
     //Reads entered email and password
     useremail = req.body.email
     userpassword = req.body.password
@@ -522,12 +528,17 @@ app.post("/login", function (req, res) {
             //No user with entered email is found
             if (!foundUser) {
                 console.log("User not found");
+
+                alert[0] = 1;
+                return res.render("login", { alerts: alert });
             }
 
             //User account still pending (email not verified)
             if (foundUser.status == 'Pending') {
                 console.log("Account Still Pending")
-                //res.redirect("/verify");
+
+                alert[1] = 1;
+                return res.render("verify", { alerts: alert });
             }
 
             //Check Password
@@ -538,7 +549,7 @@ app.post("/login", function (req, res) {
                 if (err) {
                     console.error(err)
                 } else {
-                    console.log("REverse hashing success!")
+                    console.log("Reverse hashing success!")
                     if (result) {
                         console.log("user found");
 
@@ -546,6 +557,9 @@ app.post("/login", function (req, res) {
                         res.redirect("/home")
                     } else {
                         console.log("Invalid Password")
+
+                        alert[0] = 1;
+                        return res.render("login", { alerts: alert });
                     }
                 }
             })
