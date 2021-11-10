@@ -12,6 +12,7 @@ const mongoose = require("mongoose")
 const nodemailer = require("nodemailer");
 const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
+const bcrypt = require("bcryptjs");
 
 
 const app = express();
@@ -74,8 +75,6 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model("User", userSchema);
 const Post = mongoose.model("Post", postSchema);
 
-//Encryption Object
-var bcrypt = require("bcryptjs");
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -84,7 +83,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 //Otherwise, user is directed to login page.
 app.get("/", function (req, res) {
     sess = req.session
-    if (sess.email && sess.password) {
+    if (sess.email) {
         return res.render("home");
     }
     else {
@@ -108,7 +107,7 @@ app.get("/logout", function (req, res) {
 //Client request to view sell page. Only renders if user is logged in, otherwise redirects to login page
 app.get("/sell", function (req, res) {
     sess = req.session;
-    if (sess.email && sess.password) {
+    if (sess.email) {
         return res.render("sell");
     }
     else {
@@ -126,7 +125,7 @@ app.get("/verify", function (req, res) {
 //Renders home page. Only renders if user is logged in, otherwise redirects to login page
 app.get("/home", function (req, res) {
     sess = req.session
-    if (sess.email && sess.password) {
+    if (sess.email) {
         return res.render("home");
     }
     else {
@@ -152,7 +151,7 @@ app.get("/signup", function (req, res) {
 app.get("/profile", function (req, res) {
     sess = req.session
 
-    if (sess.email && sess.password) {
+    if (sess.email) {
         User.find({ email: sess.email }, function (err, foundUser) {
             if (!foundUser) {
                 return res.status(404).send({ message: "No User posts found." });
@@ -173,24 +172,12 @@ app.get("/profile", function (req, res) {
 })
 
 
-//Helper Function to sort listings by date
-function sortByDate(property) {
-    return function (a, b) {
-        if ((a[property] - b[property]) < 0)
-            return 1;
-        else if ((a[property] - b[property]) > 0)
-            return -1;
-
-        return 0;
-    }
-}
-
 
 //Client request for Buy page is handled here. Renders the Buy Page with
 //recent item listings; most recently created listings appearing at the top
 app.get("/buy", function (req, res) {
     sess = req.session
-    if (sess.email && sess.password) {
+    if (sess.email) {
         Post.find({}, function (err, foundPosts) {
             if (!foundPosts) {
                 return res.status(404).send({ message: "No posts found." });
@@ -229,7 +216,7 @@ app.get("/search", function (req, res) {
 
     //Searches Posts DB for listings containing keyword in Title/Description
     sess = req.session
-    if (sess.email && sess.password) {
+    if (sess.email) {
         Post.find({ tags: { $in: regex } }, function (err, foundPosts) {
             if (!foundPosts) {
                 return res.status(404).send({ message: "No posts found." });
@@ -353,12 +340,16 @@ app.post("/verify", function (req, res) {
             console.log("User not found");
             return res.status(404).send({ message: "User Not found." });
         }
+
         //If user is found with code...
         else {
             console.log("user found");
 
+            console.log(foundUser.status)
             //Activate account
             foundUser.status = "Active";
+            console.log("CHanged user status")
+            console.log(foundUser.status)
 
             //Save updates to User database
             foundUser.save(function (err, result) {
@@ -382,14 +373,48 @@ app.post("/verify", function (req, res) {
 
 //Functionality for the Account Creation Page
 app.post("/signup", function (req, res) {
+
+    //Some important constants
     const emailHandle = "@vanderbilt.edu";
+    const symbols = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+    const saltRounds = 10
 
-    //Reads username and email
+    //Reads user email and password
     useremail = req.body.email
-    //userpassword = bcrypt.hashSync(req.body.password, 8)
-    userpassword = req.body.password
+    plainTextUserPassword = req.body.password
+    console.log(useremail)
+    console.log(plainTextUserPassword)
+    console.log(req.body.password2)
 
-    //Creates a unique confirmation code for account verification
+    //Checks if email is already taken
+    User.findOne({ email: useremail }, function (err, foundUser) {
+        if (err) {
+            console.error(err);
+        } else {
+            if (foundUser != null) {
+                console.log("Email Already Taken")
+            } else {
+                console.log("Email Not Taken")
+            }
+        }
+    })
+
+    //Checks valid vanderbilt email handle was entered
+    if (!(useremail.endsWith(emailHandle))) {
+        console.error("Not a Valid Vanderbilt Email");
+    }
+
+    //Checks Password meets Certain Strength Requirements
+    if (plainTextUserPassword.length <= 8 || plainTextUserPassword.length >= 25 || !(hasNumber(plainTextUserPassword)) || !(symbols.test(plainTextUserPassword))) {
+        console.error("Password does not meet Strength requirements");
+    }
+
+    //Confirms Password matches Re-Typed Version
+    if (plainTextUserPassword != req.body.password2) {
+        console.log("Passwords do not match")
+    }
+
+    //Creates a unique confirmation code for account email verification
     const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     let code = '';
     for (let i = 0; i < 8; i++) {
@@ -429,36 +454,30 @@ app.post("/signup", function (req, res) {
         }
     });
 
-    //Creates a new user with specified email and password
-    const user = new User({
-        email: useremail,
-        password: userpassword,
-        confirmationCode: code
-    })
+    //User Password gets hashed for security purposes
+    bcrypt.hash(plainTextUserPassword, saltRounds, function (err, hash) {
+        if (err) {
+            console.error(err)
+        } else {
 
-
-    User.findOne({ email: useremail }, function (err, foundUser) {
-
-        //Checks User Database if entered email is a valid Vanderbilt address and is not already taken.
-        if (/*foundUser == null && */useremail.endsWith(emailHandle)) {
+            //Creates a new user with specified email and password
+            const user = new User({
+                email: useremail,
+                password: hash,
+                confirmationCode: code
+            })
 
             //Saves new user to database
             User.insertMany(user, function (err) {
                 if (err) {
                     console.log(err)
-                }
-                else {
+                } else {
                     console.log("successfully saved user")
 
                     //redirects new user to the verification page
                     res.redirect("/verify")
                 }
             });
-        }
-        else {
-
-            //Invalid emails and taken users get redirected to failure page
-            res.redirect("/failure");
         }
     })
 })
@@ -474,51 +493,66 @@ app.post("/login", function (req, res) {
     //Creates a user session with entered email and password
     sess = req.session;
     sess.email = useremail;
-    sess.password = userpassword;
-
 
     //Checks User database to ensure email and password are correct
-    User.findOne({ email: useremail, password: userpassword, status: "Active" }, function (err, foundUser) {
+    User.findOne({ email: useremail }, function (err, foundUser) {
         if (err) {
             console.log(err);
+        } else {
 
+            //No user with entered email is found
+            if (!foundUser) {
+                console.log("User not found");
+            }
+
+            //User account still pending (email not verified)
+            if (foundUser.status == 'Pending') {
+                console.log("Account Still Pending")
+                //res.redirect("/verify");
+            }
+
+            //Check Password
+            console.log("Testing Password Validation")
+            console.log(userpassword)
+            console.log(foundUser.password)
+            bcrypt.compare(userpassword, foundUser.password, function (err, result) {
+                if (err) {
+                    console.error(err)
+                } else {
+                    console.log("REverse hashing success!")
+                    if (result) {
+                        console.log("user found");
+
+                        //Renders Home Page after successful login
+                        res.redirect("/home")
+                    } else {
+                        console.log("Invalid Password")
+                    }
+                }
+            })
         }
-
-        //Invalid email or password
-        if (!foundUser) {
-            console.log("User not found");
-            return res.status(404).send({ message: "User Not found." });
-        }
-
-        //User account still pending (email not verified)
-        if (foundUser.status == "Pending") {
-            //res.status(404).send({ message: "Pending Account. Please confrim in your Email" });
-            res.redirect("/verify");
-        }
-
-
-        //Incomplete Feature: Password encryption
-
-        // var isValidPass = bcrypt.compareSync(userpassword, foundUser.password);
-        // if (isValidPassword) {
-        //     console.log("Valid Password");
-        // }
-        // else {
-        //     console.log("Invalid Password");
-        // }
-
-        // if (foundUser.password) {
-        //     console.log("User not found");
-        //     return res.status(404).send({ message: "User Not found." });
-        // }
-
-        console.log("user found");
-
-        //Renders Home Page after successful login
-        res.redirect("/home")
     })
 
 })
+
+/**********Helper Functions**********/
+
+//For Testing Password Contains a Number
+function hasNumber(myString) {
+    return /\d/.test(myString);
+}
+
+//For ordering item posts by date
+function sortByDate(property) {
+    return function (a, b) {
+        if ((a[property] - b[property]) < 0)
+            return 1;
+        else if ((a[property] - b[property]) > 0)
+            return -1;
+
+        return 0;
+    }
+}
 
 
 //Local Port for development
