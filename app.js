@@ -143,7 +143,7 @@ app.get("/failure", function (req, res) {
 //Renders signup page when Client 
 app.get("/signup", function (req, res) {
     console.log('request for signup recieved')
-    res.render("signup");
+    res.render("signup", { alerts: [0, 0, 0] });
 })
 
 
@@ -374,6 +374,9 @@ app.post("/verify", function (req, res) {
 //Functionality for the Account Creation Page
 app.post("/signup", function (req, res) {
 
+    //Alerts array
+    let alert = [0, 0, 0];
+
     //Some important constants
     const emailHandle = "@vanderbilt.edu";
     const symbols = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
@@ -386,32 +389,44 @@ app.post("/signup", function (req, res) {
     console.log(plainTextUserPassword)
     console.log(req.body.password2)
 
-    //Checks if email is already taken
-    User.findOne({ email: useremail }, function (err, foundUser) {
-        if (err) {
-            console.error(err);
-        } else {
-            if (foundUser != null) {
-                console.log("Email Already Taken")
-            } else {
-                console.log("Email Not Taken")
-            }
-        }
-    })
+    // //Checks if email is already taken
+    // User.findOne({ email: useremail }, function (err, foundUser) {
+    //     if (err) {
+    //         console.error(err);
+    //     } else {
+    //         if (foundUser != null) {
+    //             console.log("Email Already Taken")
+
+    //             alert[1] = 1;
+    //             return res.render("signup", { alerts: alert });
+    //         } else {
+    //             console.log("Email Not Taken")
+    //         }
+    //     }
+    // })
 
     //Checks valid vanderbilt email handle was entered
     if (!(useremail.endsWith(emailHandle))) {
         console.error("Not a Valid Vanderbilt Email");
+
+        alert[0] = 1;
+        return res.render("signup", { alerts: alert });
     }
 
     //Checks Password meets Certain Strength Requirements
-    if (plainTextUserPassword.length <= 8 || plainTextUserPassword.length >= 25 || !(hasNumber(plainTextUserPassword)) || !(symbols.test(plainTextUserPassword))) {
-        console.error("Password does not meet Strength requirements");
+    if (plainTextUserPassword.length < 8 || plainTextUserPassword.length > 25 || !(hasNumber(plainTextUserPassword)) || !(symbols.test(plainTextUserPassword))) {
+        console.log("Password does not meet Strength requirements");
+
+        alert[1] = 1;
+        return res.render("signup", { alerts: alert });
     }
 
     //Confirms Password matches Re-Typed Version
     if (plainTextUserPassword != req.body.password2) {
         console.log("Passwords do not match")
+
+        alert[2] = 1;
+        return res.render("signup", { alerts: alert });
     }
 
     //Creates a unique confirmation code for account email verification
@@ -460,27 +475,30 @@ app.post("/signup", function (req, res) {
             console.error(err)
         } else {
 
-        //Checks User Database if entered email is a valid Vanderbilt address and is not already taken.
-        //Creates a new user with specified email and password
-        const user = new User({
-            email: useremail,
-            password: hash,
-            confirmationCode: code
-        })
+            //Checks User Database if entered email is a valid Vanderbilt address and is not already taken.
+            //Creates a new user with specified email and password
+            const user = new User({
+                email: useremail,
+                password: hash,
+                confirmationCode: code
+            })
 
-        //Saves new user to database
-        User.insertMany(user, function (err) {
-            if (err) {
-                console.log(err)
-            } else {
-                console.log("successfully saved user")
 
-                //redirects new user to the verification page
-                res.redirect("/verify")
-            }
-        });
-    }
+            //Saves new user to database
+            User.insertMany(user, function (err) {
+                if (err) {
+                    console.log(err)
+                } else {
+                    console.log("successfully saved user")
+
+                    //redirects new user to the verification page
+                    res.redirect("/verify")
+                }
+            });
+        }
     })
+
+
 })
 
 
