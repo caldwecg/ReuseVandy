@@ -82,7 +82,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 //Client requests root page. If the user is logged in to a session, user is directed to home page.
 //Otherwise, user is directed to login page.
 
-function defaultHandler (req, res) {
+function defaultHandler(req, res) {
     sess = req.session
     if (sess.email) {
         return res.render("home");
@@ -97,7 +97,7 @@ app.get("/", defaultHandler)
 
 //Client Request to end their session; redirects to the login page after session destruction.
 
-function logoutHandler (req, res) {
+function logoutHandler(req, res) {
     req.session.destroy((err) => {
         if (err) {
             console.log(err);
@@ -110,7 +110,7 @@ app.get("/logout", logoutHandler);
 
 
 //Client request to view sell page. Only renders if user is logged in, otherwise redirects to login page
-function sellHandler (req, res) {
+function sellHandler(req, res) {
     sess = req.session;
     if (sess.email) {
         return res.render("sell");
