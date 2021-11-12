@@ -4,6 +4,7 @@ const authController = require("../app");
 const session = require('express-session');
 
 
+
 describe('Test Handlers', function () {
         test ('Testing default route', async () => {
         
@@ -74,10 +75,19 @@ describe('Test Handlers', function () {
         });
 
 
+
     test('has Number', () => {
 
         expect(app.hasNumber("xyz")).toBe(false);;
-        
+
+
+    });
+
+    test('has Number', () => {
+
+        expect(app.hasNumber("x1yz")).toBe(true);;
+
+
     });
 
 
@@ -101,10 +111,9 @@ describe('Test Handlers', function () {
     const { res } = await expressRequestMock(authController.sellPost, decorators);
     expect(res.statusCode).toBe(200); // I tried different inputs and it works with 
                                     // every codes, the message is not available though
+        expect(app.sortByDate(["01-22-2000", "10-22-2000"])).toBe(["01-22-2000", "10-22-2000"]);;
+
     });
-
-
-
 });
 
 
@@ -116,13 +125,13 @@ describe('Test Handlers', function () {
 
 // describe('app', () => {
 //     let res
-  
+
 //     beforeEach(() => {
 //       res = {
 //         redirect: jest.fn(),
 //       }
 //     })
-  
+
 //     test('should call res.redirect', async () => {
 //       await app({}, res)
 //       expect(res.redirect.mock.calls.length).toEqual(1)
@@ -135,4 +144,3 @@ describe('Test Handlers', function () {
 //     //expect(app.sortByDate.toBe(1);
 // });
 
-  
