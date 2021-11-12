@@ -1,19 +1,19 @@
-const index = require("../app");
+// const index = require("../app");
 
-const request = require("supertest");
-const express = require("express");
-const app = express();
+// const request = require("supertest");
+// const express = require("express");
+// const app = express();
 
-app.use(express.urlencoded({ extended: false }));
-app.use("/", index);
+// app.use(express.urlencoded({ extended: false }));
+// app.use("/", index);
 
-test("index route works", done => {
-    request(app)
-      .get("/")
-      .expect("Content-Type", /json/)
-      .expect({ name: "frodo" })
-      .expect(200, done);
-  });
+// test("index route works", done => {
+//     request(app)
+//       .get("/")
+//       .expect("Content-Type", /json/)
+//       .expect({ name: "frodo" })
+//       .expect(200, done);
+//   });
 
   
 // describe('Routes', function () {

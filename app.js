@@ -13,8 +13,12 @@ const nodemailer = require("nodemailer");
 const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
 const bcrypt = require("bcryptjs");
+const path = require("path")
+const multer = require('multer')
 
-
+const upload = multer({
+    dest: "photos/"
+  });
 const app = express();
 
 //Establishes a User Session sess to supervise user acess
@@ -260,7 +264,7 @@ app.post("/buy", function (req, res) {
 
 
 //Functionality for listing creation
-app.post("/sell", function (req, res) {
+function sellPost(req, res) {
     sess = req.session
 
 
@@ -269,7 +273,31 @@ app.post("/sell", function (req, res) {
     desc = req.body.description;
     price = req.body.price;
     phone = req.body.phone;
-    img = req.body.file;
+
+
+    // const tempPath = req.file.path;
+    // const targetPath = path.join(__dirname, "./photos/image.png");
+
+    // if (path.extname(req.file.originalname).toLowerCase() === ".png") {
+    //   fs.rename(tempPath, targetPath, err => {
+    //     if (err) return handleError(err, res);
+
+    //     res
+    //       .status(200)
+    //       .contentType("text/plain")
+    //       .end("File uploaded!");
+    //   });
+    // } else {
+    //   fs.unlink(tempPath, err => {
+    //     if (err) return handleError(err, res);
+
+    //     res
+    //       .status(403)
+    //       .contentType("text/plain")
+    //       .end("Only .png files are allowed!");
+    //   });
+    // }
+
 
     //Creates tags for listing based on Title and Description
     const titleTags = req.body.title.replace(/ +/g, " ").split(" ")
@@ -334,11 +362,12 @@ app.post("/sell", function (req, res) {
             res.redirect("/profile")
         }
     });
-})
+}
+app.post("/sell", sellPost)
 
 
 //Functionality for the Verification Page.
-app.post("/verify", function (req, res) {
+function verifyPost (req, res) {
 
     let alert = [0, 0]
 
@@ -385,7 +414,8 @@ app.post("/verify", function (req, res) {
 
     })
 
-})
+}
+app.post("/verify", verifyPost);
 
 
 //Functionality for the Account Creation Page
@@ -520,7 +550,7 @@ app.post("/signup", function (req, res) {
 
 
 //Functionality of Login Page
-app.post("/login", function (req, res) {
+function loginPost (req, res) {
 
     let alert = [0, 0]
 
@@ -579,7 +609,8 @@ app.post("/login", function (req, res) {
         }
     })
 
-})
+}
+app.post("/login", loginPost)
 
 /**********Helper Functions**********/
 
@@ -610,3 +641,7 @@ exports.defaultHandler = defaultHandler;
 exports.hasNumber = hasNumber;
 exports.sortByDate = sortByDate;
 exports.logoutHandler = logoutHandler;
+exports.sellHandler = sellHandler;
+exports.loginPost = loginPost;
+exports.verifyPost = verifyPost;
+exports.sellPost = sellPost;
