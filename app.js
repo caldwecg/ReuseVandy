@@ -406,7 +406,9 @@ app.post("/signup", function (req, res) {
     console.log(plainTextUserPassword)
     console.log(req.body.password2)
 
-    // //Checks if email is already taken
+
+    //liekly isnt working for same reason wasnt working during testing - ask Geoff
+    // //Checks if email is already taken 
     // User.findOne({ email: useremail }, function (err, foundUser) {
     //     if (err) {
     //         console.error(err);
