@@ -33,11 +33,10 @@ app.use(cookieParser());
 var sess;
 
 //Denotes the Viewing Engine as ejs
-app.use(express.static("public"))
-
 app.set('views', path.join(__dirname, 'views'));
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'html');
+app.engine('ejs', require('ejs').renderFile);
+app.set('view engine', 'ejs');
+
 app.use(express.static("public"))
 
 //Connects project to database
@@ -102,7 +101,7 @@ function defaultHandler(req, res) {
         return res.render("home");
     }
     else {
-        res.render("login.ejs", { alerts: [0, 0] });
+        res.render("login", { alerts: [0, 0] });
     }
 }
 
@@ -614,7 +613,7 @@ function loginPost (req, res) {
                         console.log("Invalid Password")
 
                         alert[0] = 1;
-                        return res.render("login", { alerts: alert });
+                        r eturn res.render("login", { alerts: alert });
                     }
                 }
             })
