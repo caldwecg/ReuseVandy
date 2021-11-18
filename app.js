@@ -613,7 +613,7 @@ function loginPost (req, res) {
                         console.log("Invalid Password")
 
                         alert[0] = 1;
-                        r eturn res.render("login", { alerts: alert });
+                        return res.render("login", { alerts: alert });
                     }
                 }
             })
