@@ -175,8 +175,8 @@ function profileHandler(req, res) {
 
             }
             const posts = foundUser.posts;
-            console.log(posts);
-            return res.render("profile", { myPosts: foundUser });
+            console.log(foundUser[0]);
+            return res.render("profile", { myPosts: foundUser, user: foundUser[0]});
 
         })
     }
