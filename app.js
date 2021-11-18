@@ -33,7 +33,7 @@ app.use(cookieParser());
 var sess;
 
 //Denotes the Viewing Engine as ejs
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'Views'));
 app.engine('ejs', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 
