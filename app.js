@@ -448,20 +448,20 @@ app.post("/signup", function (req, res) {
 
     //liekly isnt working for same reason wasnt working during testing - ask Geoff
     // //Checks if email is already taken 
-    // User.findOne({ email: useremail }, function (err, foundUser) {
-    //     if (err) {
-    //         console.error(err);
-    //     } else {
-    //         if (foundUser != null) {
-    //             console.log("Email Already Taken")
+    User.findOne({ email: useremail }, function (err, foundUser) {
+        if (err) {
+            console.error(err);
+        } else {
+            if (foundUser != null) {
+                console.log("Email Already Taken")
 
-    //             alert[1] = 1;
-    //             return res.render("signup", { alerts: alert });
-    //         } else {
-    //             console.log("Email Not Taken")
-    //         }
-    //     }
-    // })
+                alert[1] = 1;
+                return res.render("signup", { alerts: alert });
+            } else {
+                console.log("Email Not Taken")
+            }
+        }
+    })
 
     //Checks valid vanderbilt email handle was entered
     if (!(useremail.endsWith(emailHandle))) {
