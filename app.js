@@ -37,7 +37,7 @@ app.set('view engine', 'ejs');
 app.use(express.static("public"))
 
 //Connects project to database
-mongoose.connect('mongodb+srv://caldwecg:<password>@cluster0.htvhh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://caldwecg:ReuseVandy22!@cluster0.htvhh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error: "));
 db.once("open", function () {
