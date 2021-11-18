@@ -37,7 +37,12 @@ app.set('view engine', 'ejs');
 app.use(express.static("public"))
 
 //Connects project to database
-mongoose.connect('mongodb://localhost:27017/usersDB')
+mongoose.connect('mongodb+srv://caldwecg:<password>@cluster0.htvhh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error: "));
+db.once("open", function () {
+  console.log("Connected successfully");
+});
 
 //Defines the structure of a Post to be stored in the database
 const postSchema = new mongoose.Schema({
