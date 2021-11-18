@@ -101,7 +101,7 @@ function defaultHandler(req, res) {
         return res.render("home");
     }
     else {
-        res.render("index", { alerts: [0, 0] });
+        res.render("index.ejs", { alerts: [0, 0] });
     }
 }
 
