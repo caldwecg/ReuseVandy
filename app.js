@@ -35,8 +35,9 @@ var sess;
 //Denotes the Viewing Engine as ejs
 app.use(express.static("public"))
 
-app.set('views', path.join(__dirname, '/views'));
-app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
 app.use(express.static("public"))
 
 //Connects project to database
