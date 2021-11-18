@@ -102,7 +102,7 @@ function defaultHandler(req, res) {
         return res.render("home");
     }
     else {
-        res.render("index.ejs", { alerts: [0, 0] });
+        res.render("login.ejs", { alerts: [0, 0] });
     }
 }
 
@@ -130,7 +130,7 @@ function sellHandler(req, res) {
         return res.render("sell");
     }
     else {
-        res.render("index", { alerts: [0, 0] });
+        res.render("login", { alerts: [0, 0] });
     }
 }
 app.get("/sell", sellHandler)
@@ -150,7 +150,7 @@ function homeHandler(req, res) {
         return res.render("home");
     }
     else {
-        res.render("index", { alerts: [0, 0] });
+        res.render("login", { alerts: [0, 0] });
     }
 }
 app.get("/home", homeHandler)
@@ -191,7 +191,7 @@ function profileHandler(req, res) {
         })
     }
     else {
-        res.render("index")
+        res.render("login")
     }
 }
 app.get("/profile", profileHandler)
@@ -219,7 +219,7 @@ function buyHandler(req, res) {
         })
     }
     else {
-        res.render("index")
+        res.render("login")
     }
 }
 app.get("/buy", buyHandler)
@@ -259,7 +259,7 @@ function searchHandler(req, res) {
         })
     }
     else {
-        res.render("index")
+        res.render("login")
     }
 }
 app.get("/search", searchHandler)
@@ -418,7 +418,7 @@ function verifyPost (req, res) {
             });
 
             //Renders login page so new user can sign in
-            res.render("index", { alerts: [0, 0] });
+            res.render("login", { alerts: [0, 0] });
 
         }
 
@@ -585,7 +585,7 @@ function loginPost (req, res) {
                 console.log("User not found");
 
                 alert[0] = 1;
-                return res.render("index", { alerts: alert });
+                return res.render("login", { alerts: alert });
             }
 
             //User account still pending (email not verified)
@@ -614,7 +614,7 @@ function loginPost (req, res) {
                         console.log("Invalid Password")
 
                         alert[0] = 1;
-                        return res.render("index", { alerts: alert });
+                        return res.render("login", { alerts: alert });
                     }
                 }
             })
