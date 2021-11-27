@@ -15,11 +15,12 @@ const sessions = require('express-session');
 const bcrypt = require("bcryptjs");
 const path = require("path")
 const multer = require('multer')
+const helpers = require('./middleware/helpers');
+const fs = require("fs");
 
-const upload = multer({
-    dest: "photos/"
-  });
 const app = express();
+
+
 
 //Establishes a User Session sess to supervise user acess
 app.use(sessions({
@@ -89,7 +90,7 @@ const User = mongoose.model("User", userSchema);
 const Post = mongoose.model("Post", postSchema);
 
 
-app.use(bodyParser.urlencoded({ extended: true }))
+
 
 
 //Client requests root page. If the user is logged in to a session, user is directed to home page.
@@ -262,6 +263,8 @@ function searchHandler(req, res) {
     }
 }
 app.get("/search", searchHandler)
+
+
 
 
 //Server Response to a search on the Buy Page. Keywords are passed in the URL to be processed

@@ -21,7 +21,7 @@
         <div class="container">
             <div class="row">
                 <!-- Contact Form -->
-                <form method="POST" action="/sell">
+                <form  method="POST" action="/sell">
                 <div class="contact-form col-md-6 ">
                     
                     
@@ -70,15 +70,18 @@
             
                 <div class="container">
                     <div class="row">
-
-                        <input type="file" name="file">
-
                         <div class="contact-form col-md-6 ">
                             <button href="#!" class="btn btn-main btn-medium btn-round-full" type="submit">Submit</button>
                         </div>
                     </div>
                 </div>
             </form>
+
+            <form action="/upload" enctype="multipart/form-data" method="post">
+                File <input type="file" name="img" accept="image/*">
+                 <input type="submit" value="Upload">
+              </form>
+
                 <!-- / End Contact Details -->
                     
                 
