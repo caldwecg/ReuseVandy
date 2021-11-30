@@ -21,23 +21,25 @@
         <div class="container">
             <div class="row">
                 <!-- Contact Form -->
-                <form  method="POST" action="/sell">
+                <form  method="POST" action="/sell" enctype="multipart/form-data">
                 <div class="contact-form col-md-6 ">
                     
                     
                         <div class="form-group">
-                            <input type="text" placeholder="Listing Name" class="form-control" name="title" id="name">
+                            <input type="text" placeholder="Listing Name" class="form-control" name="title" id="name" required>
                         </div>
                         
                         <div class="form-group">
-                            <textarea rows="6" placeholder="Description" class="form-control" name="description" id="description"></textarea>   
+                            <textarea rows="6" placeholder="Description" class="form-control" name="description" id="description" required></textarea>   
                         </div>
                         
                         <div class="form-group">
-                            <input type="text" placeholder="Asking Price" class="form-control" name="price" id="price">
+                            <input type="text" placeholder="Asking Price" class="form-control" name="price" id="price" required>
                         </div>
                                         
-                        
+                        <div class="form-group">
+                            <input type="text" placeholder="Phone Number" class="form-control" name="phone" id="phone">
+                        </div>
                 </div>
                 <!-- ./End Contact Form -->
                 
@@ -67,7 +69,10 @@
                             </select>
                     </div>
                 </div>
-            
+
+                File  <input type="file" id="image" name="image" value="" required>
+                
+
                 <div class="container">
                     <div class="row">
                         <div class="contact-form col-md-6 ">
@@ -77,10 +82,6 @@
                 </div>
             </form>
 
-            <form action="/upload" enctype="multipart/form-data" method="post">
-                File <input type="file" name="img" accept="image/*">
-                 <input type="submit" value="Upload">
-              </form>
 
                 <!-- / End Contact Details -->
                     

@@ -17,7 +17,6 @@ const path = require("path")
 const multer = require('multer')
 const helpers = require('./middleware/helpers');
 const fs = require("fs");
-
 const app = express();
 
 
@@ -39,6 +38,8 @@ app.engine('ejs', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 
 app.use(express.static("public"))
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 //Connects project to database
 mongoose.connect('mongodb+srv://caldwecg:ReuseVandy22!@cluster0.htvhh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
@@ -49,6 +50,12 @@ db.once("open", function () {
   console.log("Connected successfully");
 });
 
+
+const upload = multer({
+    dest: __dirname + '/public/uploads/'
+  });
+
+
 //Defines the structure of a Post to be stored in the database
 const postSchema = new mongoose.Schema({
     title: String,
@@ -58,12 +65,9 @@ const postSchema = new mongoose.Schema({
     category: String,
     phone: Number,
     date: Date,
+    id: String,
     tags: [String],
-    img:
-    {
-        data: Buffer,
-        contentType: String
-    }
+    img: String
 
 });
 
@@ -185,7 +189,7 @@ function profileHandler(req, res) {
 
             }
             const posts = foundUser.posts;
-            console.log(foundUser[0]);
+            console.log();
             return res.render("profile", { myPosts: foundUser, user: foundUser[0]});
 
         })
@@ -214,6 +218,7 @@ function buyHandler(req, res) {
                 foundPosts.sort(sortByDate("date"));
                 //console.log(foundPosts)
             }
+
             return res.render("buy", { posts: foundPosts });
 
         })
@@ -287,28 +292,7 @@ function sellPost(req, res) {
     phone = req.body.phone;
 
 
-    // const tempPath = req.file.path;
-    // const targetPath = path.join(__dirname, "./photos/image.png");
 
-    // if (path.extname(req.file.originalname).toLowerCase() === ".png") {
-    //   fs.rename(tempPath, targetPath, err => {
-    //     if (err) return handleError(err, res);
-
-    //     res
-    //       .status(200)
-    //       .contentType("text/plain")
-    //       .end("File uploaded!");
-    //   });
-    // } else {
-    //   fs.unlink(tempPath, err => {
-    //     if (err) return handleError(err, res);
-
-    //     res
-    //       .status(403)
-    //       .contentType("text/plain")
-    //       .end("Only .png files are allowed!");
-    //   });
-    // }
 
 
     //Creates tags for listing based on Title and Description
@@ -325,12 +309,35 @@ function sellPost(req, res) {
     var currentDate = new Date();
     date = currentDate;
 
-    console.log(title)
-    console.log(desc)
-    console.log(price)
-    console.log(phone)
-    console.log(date)
-    console.log(tags)
+
+    const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let code = '';
+    for (let i = 0; i < 8; i++) {
+        code += characters[Math.floor(Math.random() * characters.length)];
+    }
+    console.log(code);
+
+
+    const tempPath = req.file.path;
+    const storagename = 'image' + '-' + Date.now() + '.png'
+    const targetPath = path.join(__dirname, '/public/uploads/' + storagename);
+
+    if (path.extname(req.file.originalname).toLowerCase() === ".png") {
+      fs.rename(tempPath, targetPath, err => {
+        if (err) return handleError(err, res);
+
+        res.status(200)
+      });
+    } else {
+      fs.unlink(tempPath, err => {
+        if (err) return handleError(err, res);
+
+        res
+          .status(403)
+          .contentType("text/plain")
+          .end("Only .png files are allowed!");
+      });
+    }
 
 
     const post = new Post({
@@ -339,8 +346,12 @@ function sellPost(req, res) {
         price: price,
         phone: phone,
         date: date,
-        tags: tags
+        tags: tags,
+        id: code,
+        img: storagename
     });
+
+
 
     User.findOne({ email: sess.email }, function (err, foundUser) {
 
@@ -352,7 +363,7 @@ function sellPost(req, res) {
             foundUser.posts.push(post);
             foundUser.save(function (err, result) {     //Save updates to User database
                 if (err) {
-                    cosole.log(err);
+                    console.log(err);
                 }
                 else {
                     console.log(result);
@@ -375,7 +386,7 @@ function sellPost(req, res) {
         }
     });
 }
-app.post("/sell", sellPost)
+app.post("/sell", upload.single('image'), sellPost)
 
 
 //Functionality for the Verification Page.
@@ -625,6 +636,38 @@ function loginPost (req, res) {
 
 }
 app.post("/login", loginPost)
+
+
+
+
+function deletePost (req, res) {
+    console.log(req.body.postID)
+    sess = req.session
+
+    Post.deleteOne({'id': req.body.postID}, function(err, result) {
+        if (err) {
+          console.err(err);
+        } else {
+          console.log(result);
+        }
+    });
+
+
+    User.findOneAndUpdate({ email: sess.email }, { "$pull": { "posts" : { "id": req.body.postID }}}, function(err, result) {
+        if (err) {
+          console.err(err);
+        } else {
+          console.log(result);
+        }
+    });
+
+
+    res.redirect('/profile');
+}
+app.post("/delete", deletePost);
+
+
+
 
 /**********Helper Functions**********/
 

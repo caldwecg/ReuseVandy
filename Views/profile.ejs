@@ -24,12 +24,10 @@
                         <div class="media">
                           <div class="media-body">
                             <ul class="user-profile-list">
-                              <li><span>Full Name:</span>                                        
-                                    <% user.email%>
+                              <li><span>Email:</span>   
+                                        <%= user.email%>
                               </li>
-                              <li><span>Email:</span>clayton.wright@vanderbilt.edu</li>
-                              <li><span>Phone:</span>3175227344</li>
-                              <li><span>Password:</span>password</li>
+
                             </ul>
                           </div>
                         </div>
@@ -64,8 +62,18 @@
                                                     <td><%=post.desc%></td>
                                                     <td><%=post.price%></td>
                                                     <td>
+                                                        <form  method="POST" action="/delete">
+                                                            <input type='hidden' name='postID' value=<%-post.id%>>
+                                                            <button class="btn btn-main btn-medium btn-round-full" type="submit">Delete</button>
+                                                        </form>
+                                                    </td>
+
+                                                    <td>
                                                 </tr>
-                                                  
+                                                
+
+
+
                                             <% }) %>
                                         <% }) %>
                                     </tbody>
