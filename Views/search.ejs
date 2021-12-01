@@ -6,25 +6,21 @@
         <h1>Results</h1>
     </div>
 
-    <% posts.forEach(function (post) { %>  
-            
-        <div class="card mb-3">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">
-                <%=post.title%>
-              </h5>
-              <p class="card-text">
-                <%=post.desc%>
-              </p>
-              <p class="card-text">
-                  <small class="text-muted">
-                    Price: $<%=post.price%>
-                </small>
-            </p>
-            </div>
-          </div>
+    <% posts.forEach(function (post) { %>
+      <div class="col-md-3">
+          <div class="product-item">
+              <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title"><%=post.title%></h5>
+                    <p class="card-text"><%=post.desc%></p>
+                    <p class="card-text"><small class="text-muted">Price: $<%=post.price%></small></p>
+                  </div>
+                  <img class="card-img-bottom" src="uploads/<%=post.img%>" height="150px" width="150px">
+                  <p class="card-text"><%=post.phone%></p>
 
-    <% }) %>
+              </div>
+          </div>
+      </div>
+  <% }) %>
     
 </body>
