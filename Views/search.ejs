@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 <html lang = "en">
 <%- include('../partials/header') %>
-<body data-spy="scroll" data-target=".navbar" data-offset="50">
-    <div class="jumbotron text-center">
-        <h1>Results</h1>
-    </div>
-
+<body>
+    <section class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="content">
+                        <h1 class="page-name">Browse Listings</h1>
+                        <ol class="breadcrumb">
+                            <li><a href="/home">Home</a></li>
+                            <li class="active">Buy</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <% posts.forEach(function (post) { %>
       <div class="col-md-3">
           <div class="product-item">
