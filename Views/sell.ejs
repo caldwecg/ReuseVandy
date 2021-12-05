@@ -38,26 +38,13 @@
                             <input type="text" placeholder="Asking Price" class="form-control" name="price" id="price" required>
                         </div>
                                         
-                        <div class="form-group">
-                            <input type="text" placeholder="Phone Number" class="form-control" name="phone" id="phone">
-                        </div>
                 </div>
                 <!-- ./End Contact Form -->
                 
                 <!-- Contact Details -->
                 <div class="contact-details col-md-6 ">
-                    <div>
-                        <h4 class="widget-title">Category</h4>
-                            <select class="form-control">
-                                <option>Appliances</option>
-                                <option>Clothing</option>
-                                <option>Electronics</option>
-                                <option>Entertainment</option>
-                                <option>Educational Materials</option>
-                                <option>Furniture</option>
-                                <option>Lost Items</option>
-                                <option>Other</option>
-                            </select>
+                    <div class="form-group">
+                        <input type="text" placeholder="Phone Number" class="form-control" name="phone" id="phone">
                     </div>
                     <div>
                         <h4 class="widget-title">Condition</h4>
@@ -69,9 +56,13 @@
                                 <option>Worn</option>
                             </select>
                     </div>
+                    Image  
+                    <div>
+                        <input type="file" id="image" name="image" value="" required>
+                    </div>
                 </div>
 
-                File  <input type="file" id="image" name="image" value="" required>
+                
                 
 
                 <div class="container">
@@ -118,4 +109,5 @@
 <!-- Main Js File -->
 <script src="js/script.js"></script>
 </body>
+<%- include('../partials/footer') %>
 </html>
