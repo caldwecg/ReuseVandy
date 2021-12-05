@@ -319,10 +319,11 @@ function sellPost(req, res) {
 
 
     const tempPath = req.file.path;
-    const storagename = 'image' + '-' + Date.now() + '.png'
+
+    const storagename = 'image' + '-' + Date.now() + path.extname(tempPath).toLowerCase()
     const targetPath = path.join(__dirname, '/public/uploads/' + storagename);
 
-    if (path.extname(req.file.originalname).toLowerCase() === ".png") {
+    if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpeg"|| path.extname(req.file.originalname).toLowerCase() === ".jpg") {
       fs.rename(tempPath, targetPath, err => {
         if (err) return handleError(err, res);
 
@@ -335,7 +336,7 @@ function sellPost(req, res) {
         res
           .status(403)
           .contentType("text/plain")
-          .end("Only .png files are allowed!");
+          .end("Only .png and  .jpeg files are allowed!");
       });
     }
 
