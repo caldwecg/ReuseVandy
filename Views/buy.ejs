@@ -34,46 +34,9 @@
 </form>
 
 <section class="products section">
-    <div class="container">
-        <!-- <div class="col-md-3">
-            <div class="widget product-category">
-                <div class="panel-group commonAccordion" id="accordion" role="tablist" aria-multiselectable="true">
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingOne">
-                            <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Shop By Category
-
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
-                            aria-labelledby="headingOne">
-                            <div class="panel-body">
-                                <ul>
-                                    <li><a href="#!">Appliances</a></li>
-                                    <li><a href="#!">Clothing</a></li>
-                                    <li><a href="#!">Electronics</a></li>
-                                    <li><a href="#!">Entertainment</a></li>
-                                    <li><a href="#!">Education Materials</a></li>
-                                    <li><a href="#!">Furniture</a></li>
-                                    <li><a href="#!">Lost Items</a></li>
-                                    <li><a href="#!">Other</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-
-            </div>
-        </div> -->
+    <div class="container"> 
             <div class="row">
                 <% posts.forEach(function (post) { %>
-
-
-
                     <div class="col-md-3">
                         <div class="product-item">
                             <div class="card">
@@ -83,7 +46,8 @@
                                   <p class="card-text"><small class="text-muted">Price: $<%=post.price%></small></p>
                                 </div>
                                 <img class="card-img-bottom" src="uploads/<%=post.img%>" height="150px" width="150px">
-                                <p class="card-text"><%=post.desc%></p>
+                                <p class="card-text"><%=post.phone%></p>
+                                <p class="card-text"><%=post.email%></p>
 
                             </div>
                         </div>

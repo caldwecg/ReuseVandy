@@ -17,6 +17,7 @@ const path = require("path")
 const multer = require('multer')
 const helpers = require('./middleware/helpers');
 const fs = require("fs");
+const { kStringMaxLength } = require("buffer");
 const app = express();
 
 
@@ -67,8 +68,8 @@ const postSchema = new mongoose.Schema({
     date: Date,
     id: String,
     tags: [String],
-    img: String
-
+    img: String,
+    email: String
 });
 
 //Defines the structure of a User to be stored in the database
@@ -349,7 +350,8 @@ function sellPost(req, res) {
         date: date,
         tags: tags,
         id: code,
-        img: storagename
+        img: storagename,
+        email: sess.email
     });
 
 
