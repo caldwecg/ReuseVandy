@@ -42,20 +42,27 @@
                         <div class="product-item">
                             <div class="card product-thumb">
                                 <span class="bage">$<%=post.price%></span>
-                                <div class="card-body">
-                                  <h5 class="card-title"><%=post.title%></h5>
-                                  <p class="card-text"><%=post.desc%></p>
-                                </div>
+<!--                                <div class="card-body">-->
+<!--                                  <h5 class="card-title"><%=post.title%></h5>-->
+<!--                                  <p class="card-text"><%=post.desc%></p>-->
+<!--                                </div>-->
                                 <img class="card-img-bottom img-responsive" src="uploads/<%=post.img%>" height="150px" width="150px">
                                 <div class="preview-meta">
                                     <ul>
                                         <li>
+                                            <h4 class="card-text" style="color:white">Contact seller:</h4>
+                                        </li><br>
+                                        <li>
                                             <h4 class="card-text" style="color:white"><%=post.phone%></h4>
                                         </li>
                                         <li>
-                                            <h4 class="card-text" style="color:white"><%=post.email%></h4>
+                                            <h5 class="card-text" style="color:white"><%=post.email%></h5>
                                         </li>
                                     </ul>
+                                </div>
+                                <div class="product-content">
+                                    <h4><%=post.title%></h4>
+                                    <p class="card-text"><%=post.desc%></p>
                                 </div>
                             </div>
                         </div>
