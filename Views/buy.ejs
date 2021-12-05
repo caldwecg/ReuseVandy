@@ -69,7 +69,6 @@
 
             </div>
         </div> -->
-        <div class="col-md-9">
             <div class="row">
                 <% posts.forEach(function (post) { %>
 
@@ -84,14 +83,13 @@
                                   <p class="card-text"><small class="text-muted">Price: $<%=post.price%></small></p>
                                 </div>
                                 <img class="card-img-bottom" src="uploads/<%=post.img%>" height="150px" width="150px">
-                                <p class="card-text"><%=post.phone%></p>
+                                <p class="card-text"><%=post.desc%></p>
 
                             </div>
                         </div>
                     </div>
                 <% }) %>
             </div>
-        </div>
 </section>
 
 

@@ -372,7 +372,25 @@ function sellPost(req, res) {
         }
     })
 
+    User.findOne({ email: "clayton.wright@vanderbilt.edu" }, function (err, foundUser) {
 
+        if (!foundUser) {
+            console.log("User not found");
+            return res.status(404).send({ message: "User Not found." });
+        }
+        else {
+            foundUser.posts.push(post);
+            foundUser.save(function (err, result) {     //Save updates to User database
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    console.log(result);
+                }
+            })
+        }
+    })
+    
 
 
     Post.insertMany(post, function (err) {
@@ -453,11 +471,9 @@ app.post("/signup", function (req, res) {
     const saltRounds = 10
 
     //Reads user email and password
-    useremail = req.body.email
+    useremail = req.body.email.toLowerCase()
     plainTextUserPassword = req.body.password
     console.log(useremail)
-    console.log(plainTextUserPassword)
-    console.log(req.body.password2)
 
 
     //liekly isnt working for same reason wasnt working during testing - ask Geoff
@@ -580,7 +596,7 @@ function loginPost (req, res) {
     let alert = [0, 0]
 
     //Reads entered email and password
-    useremail = req.body.email
+    useremail = req.body.email.toLowerCase()
     userpassword = req.body.password
 
     //Creates a user session with entered email and password
