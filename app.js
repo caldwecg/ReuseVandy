@@ -48,13 +48,13 @@ mongoose.connect('mongodb+srv://caldwecg:ReuseVandy22!@cluster0.htvhh.mongodb.ne
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error: "));
 db.once("open", function () {
-  console.log("Connected successfully");
+    console.log("Connected successfully");
 });
 
 
 const upload = multer({
     dest: __dirname + '/public/uploads/'
-  });
+});
 
 
 //Defines the structure of a Post to be stored in the database
@@ -183,7 +183,8 @@ function profileHandler(req, res) {
     if (sess.email) {
         User.find({ email: sess.email }, function (err, foundUser) {
             if (!foundUser) {
-                return res.status(404).send({ message: "No User posts found." });
+                //return res.status(404).send({ message: "No User posts found." });
+                return res.render("failure");
             }
             else {
                 console.log("User posts found");
@@ -191,7 +192,7 @@ function profileHandler(req, res) {
             }
             const posts = foundUser.posts;
             console.log();
-            return res.render("profile", { myPosts: foundUser, user: foundUser[0]});
+            return res.render("profile", { myPosts: foundUser, user: foundUser[0] });
 
         })
     }
@@ -210,6 +211,7 @@ function buyHandler(req, res) {
     if (sess.email) {
         Post.find({}, function (err, foundPosts) {
             if (!foundPosts) {
+                //Display no results message
                 return res.status(404).send({ message: "No posts found." });
             }
             else {
@@ -251,6 +253,7 @@ function searchHandler(req, res) {
     if (sess.email) {
         Post.find({ tags: { $in: regex } }, function (err, foundPosts) {
             if (!foundPosts) {
+                //Display no results message
                 return res.status(404).send({ message: "No posts found." });
             }
             else {
@@ -324,21 +327,21 @@ function sellPost(req, res) {
     const storagename = 'image' + '-' + Date.now() + path.extname(tempPath).toLowerCase()
     const targetPath = path.join(__dirname, '/public/uploads/' + storagename);
 
-    if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpeg"|| path.extname(req.file.originalname).toLowerCase() === ".jpg") {
-      fs.rename(tempPath, targetPath, err => {
-        if (err) return handleError(err, res);
+    if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpeg" || path.extname(req.file.originalname).toLowerCase() === ".jpg") {
+        fs.rename(tempPath, targetPath, err => {
+            if (err) return handleError(err, res);
 
-        res.status(200)
-      });
+            res.status(200)
+        });
     } else {
-      fs.unlink(tempPath, err => {
-        if (err) return handleError(err, res);
+        fs.unlink(tempPath, err => {
+            if (err) return handleError(err, res);
 
-        res
-          .status(403)
-          .contentType("text/plain")
-          .end("Only .png and  .jpeg files are allowed!");
-      });
+            res
+                .status(403)
+                .contentType("text/plain")
+                .end("Only .png and  .jpeg files are allowed!");
+        });
     }
 
 
@@ -360,13 +363,15 @@ function sellPost(req, res) {
 
         if (!foundUser) {
             console.log("User not found");
-            return res.status(404).send({ message: "User Not found." });
+            //return res.status(404).send({ message: "User Not found." });
+            return res.render("failure");
         }
         else {
             foundUser.posts.push(post);
             foundUser.save(function (err, result) {     //Save updates to User database
                 if (err) {
                     console.log(err);
+                    return res.render("failure");
                 }
                 else {
                     console.log(result);
@@ -379,13 +384,15 @@ function sellPost(req, res) {
 
         if (!foundUser) {
             console.log("User not found");
-            return res.status(404).send({ message: "User Not found." });
+            //return res.status(404).send({ message: "User Not found." });
+            return res.render("failure");
         }
         else {
             foundUser.posts.push(post);
             foundUser.save(function (err, result) {     //Save updates to User database
                 if (err) {
                     console.log(err);
+                    return res.render("failure");
                 }
                 else {
                     console.log(result);
@@ -393,12 +400,13 @@ function sellPost(req, res) {
             })
         }
     })
-    
+
 
 
     Post.insertMany(post, function (err) {
         if (err) {
             console.log(err)
+            return res.render("failure");
         }
         else {
             console.log("successfully saved post")
@@ -411,7 +419,7 @@ app.post("/sell", upload.single('image'), sellPost)
 
 
 //Functionality for the Verification Page.
-function verifyPost (req, res) {
+function verifyPost(req, res) {
 
     let alert = [0, 0]
 
@@ -444,7 +452,8 @@ function verifyPost (req, res) {
             //Save updates to User database
             foundUser.save(function (err, result) {
                 if (err) {
-                    cosole.log(err);
+                    console.log(err);
+                    return res.render("failure");
                 }
                 else {
                     console.log(result);
@@ -484,6 +493,7 @@ app.post("/signup", function (req, res) {
     User.findOne({ email: useremail }, function (err, foundUser) {
         if (err) {
             console.error(err);
+            return res.render("failure");
         } else {
             if (foundUser != null) {
                 console.log("Email Already Taken")
@@ -555,6 +565,7 @@ app.post("/signup", function (req, res) {
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
             console.log(error);
+            return res.render("failure");
         } else {
             console.log('Email sent: ' + info.response);
         }
@@ -564,6 +575,7 @@ app.post("/signup", function (req, res) {
     bcrypt.hash(plainTextUserPassword, saltRounds, function (err, hash) {
         if (err) {
             console.error(err)
+            return res.render("failure");
         } else {
 
             //Checks User Database if entered email is a valid Vanderbilt address and is not already taken.
@@ -579,6 +591,7 @@ app.post("/signup", function (req, res) {
             User.insertMany(user, function (err) {
                 if (err) {
                     console.log(err)
+                    return res.render("failure");
                 } else {
                     console.log("successfully saved user")
 
@@ -594,7 +607,7 @@ app.post("/signup", function (req, res) {
 
 
 //Functionality of Login Page
-function loginPost (req, res) {
+function loginPost(req, res) {
 
     let alert = [0, 0]
 
@@ -610,6 +623,7 @@ function loginPost (req, res) {
     User.findOne({ email: useremail }, function (err, foundUser) {
         if (err) {
             console.log(err);
+            return res.render("failure");
         } else {
 
             //No user with entered email is found
@@ -635,6 +649,7 @@ function loginPost (req, res) {
             bcrypt.compare(userpassword, foundUser.password, function (err, result) {
                 if (err) {
                     console.error(err)
+                    return res.render("failure");
                 } else {
                     console.log("Reverse hashing success!")
                     if (result) {
@@ -659,24 +674,26 @@ app.post("/login", loginPost)
 
 
 
-function deletePost (req, res) {
+function deletePost(req, res) {
     console.log(req.body.postID)
     sess = req.session
 
-    Post.deleteOne({'id': req.body.postID}, function(err, result) {
+    Post.deleteOne({ 'id': req.body.postID }, function (err, result) {
         if (err) {
-          console.err(err);
+            console.err(err);
+            return res.render("failure");
         } else {
-          console.log(result);
+            console.log(result);
         }
     });
 
 
-    User.findOneAndUpdate({ email: sess.email }, { "$pull": { "posts" : { "id": req.body.postID }}}, function(err, result) {
+    User.findOneAndUpdate({ email: sess.email }, { "$pull": { "posts": { "id": req.body.postID } } }, function (err, result) {
         if (err) {
-          console.err(err);
+            console.log(err);
+            return res.render("failure");
         } else {
-          console.log(result);
+            console.log(result);
         }
     });
 
