@@ -82,7 +82,16 @@
 
 
                                         <% }) %>
+
+                                        <% if (myPost.posts.length == 0) { %>
+                                        <div class="alert alert-danger alert-common" role="alert" id="notVandyEmail"><i
+                                                class="tf-ion-close-circled"></i><span>Oops!</span> Please enter a valid
+                                            Vanderbilt email. (e.g
+                                            example@vanderbilt.edu)</div>
+                                        <% }%>
+
                                         <% }) %>
+
                                     </tbody>
                                 </table>
                             </div>
