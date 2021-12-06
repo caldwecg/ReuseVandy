@@ -202,7 +202,7 @@ function profileHandler(req, res) {
 
             }
             const posts = foundUser.posts;
-            console.log();
+            console.log(posts);
             return res.render("profile", { myPosts: foundUser, user: foundUser[0] });
 
         })
@@ -265,7 +265,7 @@ function searchHandler(req, res) {
         Post.find({ tags: { $in: regex } }, function (err, foundPosts) {
             if (!foundPosts) {
                 //Display no results message
-                return res.status(404).send({ message: "No posts found." });
+                return res.render("failure");
             }
             else {
                 console.log("posts found");

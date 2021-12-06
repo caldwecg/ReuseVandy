@@ -45,15 +45,10 @@
 
                             <div class="card product-thumb">
                                 <span class="bage">$<%=post.price%></span>
-                                <!--                                <div class="card-body">-->
-                                <!--                                  <h5 class="card-title"><%=post.title%></h5>-->
-                                <!--                                  <p class="card-text"><%=post.desc%></p>-->
-                                <!--                                </div>-->
-                                
-
                                 <img class="card-img-bottom img-responsive" src="https://reusevandy.s3.us-east-2.amazonaws.com/<%=post.img%>" height="150px"
+
                                     width="150px">
-                                <div class="preview-meta">
+                                <div class="preview-meta hover-buy">
                                     <ul>
                                         <li>
                                             <h4 class="card-text" style="color:white">Contact seller:</h4>
@@ -67,9 +62,9 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="product-content">
-                                    <h4><%=post.title%></h4>
-                                    <p class="card-text"><%=post.desc%></p>
+                                <div class="product-content" style="background-color: #0c0c0c">
+                                    <h3 style="color:white" class=""><%=post.title%></h3>
+                                    <i style="color:white" class="fas fa-search"><%=post.desc%></i>
                                 </div>
                             </div>
                         </div>

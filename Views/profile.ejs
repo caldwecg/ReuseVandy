@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-
 <body>
-    <%- include('../partials/header') %>
+<%- include('../partials/header') %>
     <section class="page-header">
         <div class="container">
             <div class="row">
@@ -71,7 +70,7 @@
                                                 <form method="POST" action="/delete">
                                                     <input type='hidden' name='postID' value=<%-post.id%>>
                                                     <button class="btn btn-main btn-medium btn-round-full"
-                                                        type="submit">Delete</button>
+                                                        type="submit">Delete/Sold</button>
                                                 </form>
                                             </td>
 
@@ -82,7 +81,9 @@
 
 
                                         <% }) %>
+
                                         <% }) %>
+
                                     </tbody>
                                 </table>
                             </div>
