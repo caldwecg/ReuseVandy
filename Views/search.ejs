@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <%- include('../partials/header') %>
+
 <body>
     <section class="page-header">
         <div class="container">
@@ -9,7 +10,8 @@
                         <h1 class="page-name">Browse Listings</h1>
                         <ol class="breadcrumb">
                             <li><a href="/home">Home</a></li>
-                            <li class="active">Buy</li>
+                            <li><a href="/buy">Buy</a></li>
+                            <li class="active">Search Results</li>
                         </ol>
                     </div>
                 </div>
@@ -17,51 +19,58 @@
         </div>
     </section>
     <% posts.forEach(function (post) { %>
-      <div class="col-md-3">
-          <div class="product-item">
-              <div class="card">
-                  <div class="card-body">
+    <div class="col-md-3">
+        <div class="product-item">
+            <div class="card">
+                <div class="card-body">
                     <h5 class="card-title"><%=post.title%></h5>
                     <p class="card-text"><%=post.desc%></p>
                     <p class="card-text"><small class="text-muted">Price: $<%=post.price%></small></p>
-                  </div>
-                  <img class="card-img-bottom" src="uploads/<%=post.img%>" height="150px" width="150px">
-                  <p class="card-text"><%=post.phone%></p>
+                </div>
+                <img class="card-img-bottom" src="uploads/<%=post.img%>" height="150px" width="150px">
+                <p class="card-text"><%=post.phone%></p>
 
-              </div>
-          </div>
-      </div>
-  <% }) %>
+            </div>
+        </div>
+    </div>
+    <% }) %>
 
-  <%- include('../partials/footer') %>
+    <% if (posts.length == 0) { %>
+    <div class="alert alert-danger alert-common" role="alert" id="notVandyEmail"><i
+            class="tf-ion-close-circled"></i><span>Oops!</span> Please enter a valid Vanderbilt email. (e.g
+        example@vanderbilt.edu)</div>
+    <% }%>
 
-  <!--
+    <%- include('../partials/footer') %>
+
+    <!--
   Essential Scripts
   =====================================-->
-  
-  <!-- Main jQuery -->
-  <script src="plugins/jquery/dist/jquery.min.js"></script>
-  <!-- Bootstrap 3.1 -->
-  <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
-  <!-- Bootstrap Touchpin -->
-  <script src="plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
-  <!-- Instagram Feed Js -->
-  <script src="plugins/instafeed/instafeed.min.js"></script>
-  <!-- Video Lightbox Plugin -->
-  <script src="plugins/ekko-lightbox/dist/ekko-lightbox.min.js"></script>
-  <!-- Count Down Js -->
-  <script src="plugins/syo-timer/build/jquery.syotimer.min.js"></script>
-  
-  <!-- slick Carousel -->
-  <script src="plugins/slick/slick.min.js"></script>
-  <script src="plugins/slick/slick-animation.min.js"></script>
-  
-  <!-- Google Mapl -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
-  <script type="text/javascript" src="plugins/google-map/gmap.js"></script>
-  
-  <!-- Main Js File -->
-  <script src="js/script.js"></script>
+
+    <!-- Main jQuery -->
+    <script src="plugins/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap 3.1 -->
+    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Bootstrap Touchpin -->
+    <script src="plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
+    <!-- Instagram Feed Js -->
+    <script src="plugins/instafeed/instafeed.min.js"></script>
+    <!-- Video Lightbox Plugin -->
+    <script src="plugins/ekko-lightbox/dist/ekko-lightbox.min.js"></script>
+    <!-- Count Down Js -->
+    <script src="plugins/syo-timer/build/jquery.syotimer.min.js"></script>
+
+    <!-- slick Carousel -->
+    <script src="plugins/slick/slick.min.js"></script>
+    <script src="plugins/slick/slick-animation.min.js"></script>
+
+    <!-- Google Mapl -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
+    <script type="text/javascript" src="plugins/google-map/gmap.js"></script>
+
+    <!-- Main Js File -->
+    <script src="js/script.js"></script>
 
 </body>
+
 </html>

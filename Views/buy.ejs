@@ -1,102 +1,114 @@
 <!DOCTYPE html>
 <%- include('../partials/header') %>
+
 <body>
-<section class="page-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="content">
-                    <h1 class="page-name">Browse Listings</h1>
-                    <ol class="breadcrumb">
-                        <li><a href="/home">Home</a></li>
-                        <li class="active">Buy</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<form action="/search" method="GET">
-    <div class="container">
-        <div class="row height d-flex justify-content-center align-items-center">
-            <div class="col-md-6">
-                <div class="form input-group-append"> 
-                    <input name="keywords" type="text" class="form-control form-input" placeholder="Search anything..."> 
-                    <br>
-                    <button type="submit" class="btn btn-main btn-round-full">
-                        <i class="fas fa-search">Search</i>
-
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
-
-<section class="products section">
-    <div class="container">
-        <div class = "col-md-12">
+    <section class="page-header">
+        <div class="container">
             <div class="row">
-                <% posts.forEach(function (post) { %>
+                <div class="col-md-12">
+                    <div class="content">
+                        <h1 class="page-name">Browse Listings</h1>
+                        <ol class="breadcrumb">
+                            <li><a href="/home">Home</a></li>
+                            <li class="active">Buy</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <form action="/search" method="GET">
+        <div class="container">
+            <div class="row height d-flex justify-content-center align-items-center">
+                <div class="col-md-6">
+                    <div class="form input-group-append">
+                        <input name="keywords" type="text" class="form-control form-input"
+                            placeholder="Search anything...">
+                        <br>
+                        <button type="submit" class="btn btn-main btn-round-full">
+                            <i class="fas fa-search">Search</i>
+
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <section class="products section">
+        <div class="container">
+            <div class="col-md-12">
+                <div class="row">
+                    <% posts.forEach(function (post) { %>
                     <div class="col-md-4">
                         <div class="product-item">
+
                             <div class="card product-thumb">
                                 <span class="bage">$<%=post.price%></span>
-                                <div class="card-body">
-                                  <h5 class="card-title"><%=post.title%></h5>
-                                  <p class="card-text"><%=post.desc%></p>
-                                </div>
-                                <img class="card-img-bottom img-responsive" src="uploads/<%=post.img%>" height="150px" width="150px">
+                                <!--                                <div class="card-body">-->
+                                <!--                                  <h5 class="card-title"><%=post.title%></h5>-->
+                                <!--                                  <p class="card-text"><%=post.desc%></p>-->
+                                <!--                                </div>-->
+                                <img class="card-img-bottom img-responsive" src="uploads/<%=post.img%>" height="150px"
+                                    width="150px">
                                 <div class="preview-meta">
                                     <ul>
                                         <li>
-                                            <h4 class="card-text" style="color:white"><%=post.phone%></h4>
+                                            <h4 class="card-text" style="color:white">Contact seller:</h4>
+                                        </li><br>
+                                        <li>
+                                            <h4 class="card-text" style="color:white">
+                                                <%=post.phone%></h4>
                                         </li>
                                         <li>
-                                            <h4 class="card-text" style="color:white"><%=post.email%></h4>
+                                            <h5 class="card-text" style="color:white"><%=post.email%></h5>
                                         </li>
                                     </ul>
+                                </div>
+                                <div class="product-content">
+                                    <h4><%=post.title%></h4>
+                                    <p class="card-text"><%=post.desc%></p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                <% }) %>
+                    <% }) %>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
 
-<%- include('../partials/footer') %>
+    <%- include('../partials/footer') %>
 
-<!--
+    <!--
 Essential Scripts
 =====================================-->
 
-<!-- Main jQuery -->
-<script src="plugins/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.1 -->
-<script src="plugins/bootstrap/js/bootstrap.min.js"></script>
-<!-- Bootstrap Touchpin -->
-<script src="plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
-<!-- Instagram Feed Js -->
-<script src="plugins/instafeed/instafeed.min.js"></script>
-<!-- Video Lightbox Plugin -->
-<script src="plugins/ekko-lightbox/dist/ekko-lightbox.min.js"></script>
-<!-- Count Down Js -->
-<script src="plugins/syo-timer/build/jquery.syotimer.min.js"></script>
+    <!-- Main jQuery -->
+    <script src="plugins/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap 3.1 -->
+    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Bootstrap Touchpin -->
+    <script src="plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
+    <!-- Instagram Feed Js -->
+    <script src="plugins/instafeed/instafeed.min.js"></script>
+    <!-- Video Lightbox Plugin -->
+    <script src="plugins/ekko-lightbox/dist/ekko-lightbox.min.js"></script>
+    <!-- Count Down Js -->
+    <script src="plugins/syo-timer/build/jquery.syotimer.min.js"></script>
 
-<!-- slick Carousel -->
-<script src="plugins/slick/slick.min.js"></script>
-<script src="plugins/slick/slick-animation.min.js"></script>
+    <!-- slick Carousel -->
+    <script src="plugins/slick/slick.min.js"></script>
+    <script src="plugins/slick/slick-animation.min.js"></script>
 
-<!-- Google Mapl -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
-<script type="text/javascript" src="plugins/google-map/gmap.js"></script>
+    <!-- Google Mapl -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
+    <script type="text/javascript" src="plugins/google-map/gmap.js"></script>
 
-<!-- Main Js File -->
-<script src="js/script.js"></script>
+    <!-- Main Js File -->
+    <script src="js/script.js"></script>
 
 
 </body>
