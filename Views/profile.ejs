@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <body>
     <%- include('../partials/header') %>
     <section class="page-header">
@@ -22,16 +23,16 @@
                 <div class="col-md-12">
                     <div class="dashboard-wrapper dashboard-user-profile">
                         <div class="media">
-                          <div class="media-body">
-                            <ul class="user-profile-list">
-                              <li><span>Email:</span>   
+                            <div class="media-body">
+                                <ul class="user-profile-list">
+                                    <li><span>Email:</span>
                                         <%= user.email%>
-                              </li>
+                                    </li>
 
-                            </ul>
-                          </div>
+                                </ul>
+                            </div>
                         </div>
-                      </div>
+                    </div>
                     <div class="dashboard-wrapper user-dashboard">
                         <div class="media">
                             <div class="media-body">
@@ -53,28 +54,34 @@
                                     </thead>
                                     <tbody>
                                         <% myPosts.forEach(function (myPost) { %>
-                
-                                            <% myPost.posts.forEach(function(post){%>
-                                                
-                                                <tr>
-                                                    <td><%=post.title%></td>
-                                                    <td><%=post.date%></td>
-                                                    <td><%=post.desc%></td>
-                                                    <td><%=post.price%></td>
-                                                    <td>
-                                                        <form  method="POST" action="/delete">
-                                                            <input type='hidden' name='postID' value=<%-post.id%>>
-                                                            <button class="btn btn-main btn-medium btn-round-full" type="submit">Delete</button>
-                                                        </form>
-                                                    </td>
 
-                                                    <td>
-                                                </tr>
-                                                
+                                        <% myPost.posts.forEach(function(post){
+
+                                        day = post.date.getDate()
+                                        month = post.date.getMonth() + 1
+                                        year = post.date.getFullYear()
+                                        postDate = month + '-' + day + '-' + year %>
+
+                                        <tr>
+                                            <td><%=post.title%></td>
+                                            <td><%=postDate%></td>
+                                            <td><%=post.desc%></td>
+                                            <td><%='$'+post.price%></td>
+                                            <td>
+                                                <form method="POST" action="/delete">
+                                                    <input type='hidden' name='postID' value=<%-post.id%>>
+                                                    <button class="btn btn-main btn-medium btn-round-full"
+                                                        type="submit">Delete</button>
+                                                </form>
+                                            </td>
+
+                                            <td>
+                                        </tr>
 
 
 
-                                            <% }) %>
+
+                                        <% }) %>
                                         <% }) %>
                                     </tbody>
                                 </table>

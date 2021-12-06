@@ -64,7 +64,7 @@ const postSchema = new mongoose.Schema({
     price: Number,
     condition: String,
     category: String,
-    phone: Number,
+    phone: String,
     date: Date,
     id: String,
     tags: [String],
@@ -295,9 +295,13 @@ function sellPost(req, res) {
     price = req.body.price;
     phone = req.body.phone;
 
+    if (phone.length == 10) {
+        areaCode = phone.substring(0, 3)
+        middleThree = phone.substring(3, 6)
+        lastFour = phone.substring(6, 10)
 
-
-
+        phone = '(' + areaCode + ') ' + middleThree + '-' + lastFour
+    }
 
     //Creates tags for listing based on Title and Description
     const titleTags = req.body.title.replace(/ +/g, " ").split(" ")
