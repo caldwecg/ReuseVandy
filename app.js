@@ -19,8 +19,21 @@ const helpers = require('./middleware/helpers');
 const fs = require("fs");
 const { kStringMaxLength } = require("buffer");
 const app = express();
+const aws = require('aws-sdk');
+const multerS3 = require('multer-s3');
+const fileUpload = require('express-fileupload');
+require('dotenv').config();
 
+app.use(fileUpload());
 
+const SESConfig = {
+    apiVersion: 'latest',
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    accessSecretKey: process.env.AWS_SECRET_ACCESS_KEY,
+}
+aws.config.update(SESConfig);
+
+var s3 = new aws.S3();
 
 //Establishes a User Session sess to supervise user acess
 app.use(sessions({
@@ -52,9 +65,7 @@ db.once("open", function () {
 });
 
 
-const upload = multer({
-    dest: __dirname + '/public/uploads/'
-});
+
 
 
 //Defines the structure of a Post to be stored in the database
@@ -288,6 +299,31 @@ app.post("/buy", function (req, res) {
 function sellPost(req, res) {
     sess = req.session
 
+    const tempPath = req.files.image.name;
+    const storagename = 'image' + '-' + Date.now() + path.extname(tempPath).toLowerCase()
+
+    console.log(req.files.image)
+    aws.config.update({
+        region: "us-east-2" //Region
+    })
+
+    // Binary data base64
+    const fileContent  = Buffer.from(req.files.image.data, 'binary');
+
+    // Setting up S3 upload parameters
+    const params = {
+        Bucket: 'reusevandy',
+        Key: storagename, // File name you want to save as in S3
+        Body: fileContent 
+    };
+
+    // Uploading files to the bucket
+    s3.upload(params, function(err, data) {
+        if (err) {
+            throw err;
+        }
+        res.status(200);
+    });
 
     //Reads listing information from the form
     title = req.body.title;
@@ -324,29 +360,6 @@ function sellPost(req, res) {
         code += characters[Math.floor(Math.random() * characters.length)];
     }
     console.log(code);
-
-
-    const tempPath = req.file.path;
-
-    const storagename = 'image' + '-' + Date.now() + path.extname(tempPath).toLowerCase()
-    const targetPath = path.join(__dirname, '/public/uploads/' + storagename);
-
-    if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpeg" || path.extname(req.file.originalname).toLowerCase() === ".jpg") {
-        fs.rename(tempPath, targetPath, err => {
-            if (err) return handleError(err, res);
-
-            res.status(200)
-        });
-    } else {
-        fs.unlink(tempPath, err => {
-            if (err) return handleError(err, res);
-
-            res
-                .status(403)
-                .contentType("text/plain")
-                .end("Only .png and  .jpeg files are allowed!");
-        });
-    }
 
 
     const post = new Post({
@@ -419,7 +432,7 @@ function sellPost(req, res) {
         }
     });
 }
-app.post("/sell", upload.single('image'), sellPost)
+app.post("/sell", sellPost)
 
 
 //Functionality for the Verification Page.
@@ -729,7 +742,7 @@ function sortByDate(property) {
 }
 
 const PORT = process.env.PORT || 3000;
-
+const S3_BUCKET = process.env.S3_BUCKET;
 
 //Local Port for development
 app.listen(PORT, function () {
