@@ -1094,6 +1094,7 @@ input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focu
 
 .product-item {
   margin-bottom: 30px;
+
 }
 
 .product-item .product-thumb {
@@ -1111,7 +1112,7 @@ input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focu
   right: 12px;
   background: #000;
   color: #fff;
-  font-size: 12px;
+  font-size: 20px;
   padding: 4px 12px;
   font-weight: 300;
   display: inline-block;
@@ -1183,7 +1184,7 @@ input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focu
 }
 
 .product-item .product-content h4 a {
-  color: #000;
+  color: white;
 }
 
 .product-modal {
@@ -2713,4 +2714,10 @@ input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focu
   color: #555;
 }
 
+.hover-buy {
+  vertical-align: middle;
+  position: relative;
+  top: 50%;
+  display: table-cell;
+}
 /*# sourceMappingURL=style.css.map */
