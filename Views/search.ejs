@@ -55,8 +55,11 @@
                     <% }) %>
                     <% if (posts.length === 0) { %>
                         <div class="alert alert-danger alert-common" role="alert" id="notVandyEmail"><i
-                                    class="tf-ion-close-circled"></i><span>Oops!</span> No valid search results. Try checking your spelling</div>
+                                    class="tf-ion-close-circled"></i><span>Oops!</span> No results match your search</div>
                     <% }%>
+                    <form action="/buy" method="GET">
+                        <a href="/buy" class="btn btn-main-top btn-round-full btn-large">Take me back to Buy page</a>
+                    </form>
                 </div>
             </div>
         </div>
