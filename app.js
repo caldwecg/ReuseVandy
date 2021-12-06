@@ -714,6 +714,15 @@ function deletePost(req, res) {
         }
     });
 
+    User.findOneAndUpdate({ email: req.body.email }, { "$pull": { "posts": { "id": req.body.postID } } }, function (err, result) {
+        if (err) {
+            console.log(err);
+            return res.render("failure");
+        } else {
+            console.log(result);
+        }
+    });
+
 
     res.redirect('/profile');
 }
