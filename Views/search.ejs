@@ -23,14 +23,15 @@
         <div class="container">
             <div class="col-md-12">
                 <div class="row">
-                    <% posts.forEach(function (post) { %>
+                  <% posts.forEach(function (post) { %>
                     <div class="col-md-4">
                         <div class="product-item">
 
                             <div class="card product-thumb">
                                 <span class="bage">$<%=post.price%></span>
-                                <img class="card-img-bottom img-responsive" src="uploads/<%=post.img%>" height="150px"
-                                     width="150px">
+                                <img class="card-img-bottom img-responsive" src="https://reusevandy.s3.us-east-2.amazonaws.com/<%=post.img%>" height="150px"
+
+                                    width="150px">
                                 <div class="preview-meta hover-buy">
                                     <ul>
                                         <li>
