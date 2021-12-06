@@ -18,28 +18,49 @@
             </div>
         </div>
     </section>
-    <% posts.forEach(function (post) { %>
-    <div class="col-md-3">
-        <div class="product-item">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title"><%=post.title%></h5>
-                    <p class="card-text"><%=post.desc%></p>
-                    <p class="card-text"><small class="text-muted">Price: $<%=post.price%></small></p>
-                </div>
-                <img class="card-img-bottom" src="uploads/<%=post.img%>" height="150px" width="150px">
-                <p class="card-text"><%=post.phone%></p>
 
+    <section class="products section">
+        <div class="container">
+            <div class="col-md-12">
+                <div class="row">
+                    <% posts.forEach(function (post) { %>
+                    <div class="col-md-4">
+                        <div class="product-item">
+
+                            <div class="card product-thumb">
+                                <span class="bage">$<%=post.price%></span>
+                                <img class="card-img-bottom img-responsive" src="uploads/<%=post.img%>" height="150px"
+                                     width="150px">
+                                <div class="preview-meta hover-buy">
+                                    <ul>
+                                        <li>
+                                            <h4 class="card-text" style="color:white">Contact seller:</h4>
+                                        </li><br>
+                                        <li>
+                                            <h4 class="card-text" style="color:white">
+                                                <%=post.phone%></h4>
+                                        </li>
+                                        <li>
+                                            <h5 class="card-text" style="color:white"><%=post.email%></h5>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="product-content" style="background-color: #0c0c0c">
+                                    <h3 style="color:white" class=""><%=post.title%></h3>
+                                    <i style="color:white" class="fas fa-search"><%=post.desc%></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% }) %>
+                    <% if (posts.length === 0) { %>
+                        <div class="alert alert-danger alert-common" role="alert" id="notVandyEmail"><i
+                                    class="tf-ion-close-circled"></i><span>Oops!</span> No valid search results. Try checking your spelling</div>
+                    <% }%>
+                </div>
             </div>
         </div>
-    </div>
-    <% }) %>
-
-    <% if (posts.length == 0) { %>
-    <div class="alert alert-danger alert-common" role="alert" id="notVandyEmail"><i
-            class="tf-ion-close-circled"></i><span>Oops!</span> Please enter a valid Vanderbilt email. (e.g
-        example@vanderbilt.edu)</div>
-    <% }%>
+    </section>
 
     <%- include('../partials/footer') %>
 
