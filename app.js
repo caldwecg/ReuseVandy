@@ -32,7 +32,6 @@ const SESConfig = {
     accessSecretKey: process.env.AWS_SECRET_ACCESS_KEY,
 }
 aws.config.update(SESConfig);
-
 var s3 = new aws.S3();
 
 //Establishes a User Session sess to supervise user acess
