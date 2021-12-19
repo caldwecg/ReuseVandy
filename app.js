@@ -55,7 +55,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 //Connects project to database
-mongoose.connect('mongodb+srv://caldwecg:ReuseVandy22!@cluster0.htvhh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://caldwecg:' + process.env.MONGO_PW + '@cluster0.htvhh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error: "));
@@ -561,7 +561,7 @@ app.post("/signup", function (req, res) {
 
             //gmail account that will automatically send authentication codes
             user: 'reusevandy@gmail.com',
-            pass: 'ReuseVandy2021!'
+            pass: process.env.GMAIL_PW
         }
     });
 
